@@ -1,0 +1,16 @@
+{
+  "name": "zilliztech",
+  "description": "Official Milvus and Zilliz Cloud plugins",
+  "owner": {
+    "name": "Zilliz",
+    "email": "support@zilliz.com"
+  },
+  "plugins": [
+    {
+      "name": "milvus",
+      "description": "Milvus vector database integration for Claude Code",
+      "version": "0.1.0",
+      "source": "./"
+    }
+  ]
+}
