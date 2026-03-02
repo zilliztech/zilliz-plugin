@@ -1,20 +1,20 @@
 {
-  "name": "milvus",
-  "description": "Milvus vector database integration for Claude Code. Connect to Milvus or Zilliz Cloud to manage collections, perform vector searches, and build AI applications.",
+  "name": "zilliz",
+  "displayName": "Zilliz Cloud",
+  "description": "Manage Zilliz Cloud clusters and Milvus vector databases from Claude Code using the zilliz-cli.",
   "version": "0.1.0",
   "author": {
-    "name": "Zilliz"
+    "name": "Zilliz",
+    "email": "support@zilliz.com"
   },
-  "homepage": "https://github.com/zilliztech/milvus-plugin",
-  "repository": "https://github.com/zilliztech/milvus-plugin",
+  "homepage": "https://github.com/zilliztech/zilliz-plugin",
+  "repository": "https://github.com/zilliztech/zilliz-plugin",
   "license": "Apache-2.0",
   "keywords": [
-    "milvus",
     "zilliz",
+    "milvus",
     "vector-database",
     "semantic-search",
-    "rag",
-    "embeddings",
-    "similarity-search"
+    "rag"
   ]
 }
