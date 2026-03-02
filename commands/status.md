@@ -13,7 +13,7 @@ Verify CLI is installed and user is logged in:
 zilliz auth status
 ```
 
-If not set up, suggest running `/quickstart` first.
+If not set up, suggest running `/zilliz:quickstart` first.
 
 ## Step 2: Show Current Context
 
