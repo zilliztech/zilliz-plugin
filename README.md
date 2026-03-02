@@ -22,7 +22,7 @@ This plugin teaches Claude how to use the `zilliz-cli` to manage your Zilliz Clo
 After installing the plugin, run:
 
 ```
-/quickstart
+/zilliz:quickstart
 ```
 
 This guides you through installing the CLI, logging in, and connecting to a cluster.
@@ -31,8 +31,8 @@ This guides you through installing the CLI, logging in, and connecting to a clus
 
 | Command | Description |
 |---------|-------------|
-| `/quickstart` | Install CLI, authenticate, and set up cluster context |
-| `/status` | Show cluster status, collections, and statistics |
+| `/zilliz:quickstart` | Install CLI, authenticate, and set up cluster context |
+| `/zilliz:status` | Show cluster status, collections, and statistics |
 
 ## Capabilities
 
