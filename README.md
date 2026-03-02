@@ -1,74 +1,60 @@
-# Milvus Plugin for Claude Code
+# Zilliz Cloud Plugin for Claude Code
 
-Official [Claude Code](https://claude.ai/code) plugin for [Milvus](https://milvus.io/) and [Zilliz Cloud](https://zilliz.com/), enabling seamless vector database operations within your AI-assisted development workflow.
+Manage [Zilliz Cloud](https://zilliz.com/) clusters and [Milvus](https://milvus.io/) vector databases directly from [Claude Code](https://claude.ai/code).
 
-## Features
+## What It Does
 
-- **Collection Management** - Create, list, describe, and drop collections
-- **Vector Operations** - Insert, search, query, and delete vectors
-- **Index Management** - Create and manage vector indexes
-- **Zilliz Cloud Support** - Full support for Zilliz Cloud managed service
+This plugin teaches Claude how to use the `zilliz-cli` to manage your Zilliz Cloud environment. Instead of memorizing CLI commands, just describe what you want in natural language:
+
+- "Create a new collection with 768-dimension vectors"
+- "Search for similar items in my product collection"
+- "Show me the status of my cluster"
+- "Set up a backup policy for my production cluster"
 
 ## Installation
 
 ```bash
-# Add the marketplace
-/plugin marketplace add zilliztech/milvus-plugin
-
-# Install the plugin
-/plugin install milvus@zilliztech
+/install zilliztech/zilliz-plugin
 ```
 
-## Configuration
+## Quick Start
 
-Set these environment variables before using the plugin:
+After installing the plugin, run:
 
-```bash
-# For Zilliz Cloud
-export MILVUS_URI="https://your-instance.zillizcloud.com"
-export MILVUS_TOKEN="your-api-token"
-
-# For local Milvus
-export MILVUS_URI="http://localhost:19530"
 ```
+/quickstart
+```
+
+This guides you through installing the CLI, logging in, and connecting to a cluster.
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/milvus:quickstart` | Initialize Milvus/Zilliz Cloud integration |
-| `/milvus:query` | Query vectors in a collection |
-| `/milvus:help` | Show help information |
+| `/quickstart` | Install CLI, authenticate, and set up cluster context |
+| `/status` | Show cluster status, collections, and statistics |
 
-## Usage Examples
+## Capabilities
 
-```
-# Initialize connection
-/milvus:quickstart
+| Area | What You Can Do |
+|------|----------------|
+| **Clusters** | Create, delete, suspend, resume, modify |
+| **Collections** | Create with custom schema, load, release, rename, drop |
+| **Vectors** | Search, query, insert, upsert, delete |
+| **Indexes** | Create, list, describe, drop |
+| **Databases** | Create, list, describe, drop |
+| **Users & Roles** | RBAC setup, privilege management |
+| **Backups** | Create, restore, export, policy management |
+| **Import** | Bulk data import from cloud storage |
+| **Partitions** | Create, load, release, manage |
+| **Monitoring** | Cluster status, collection stats |
+| **Projects** | Project and region management |
 
-# Search for similar vectors
-/milvus:query
-```
+## Requirements
 
-## Development
-
-### Setup
-
-```bash
-git clone https://github.com/zilliztech/milvus-plugin.git
-cd milvus-plugin
-
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
-```
-
-### Testing
-
-```bash
-pytest
-```
+- Python 3.10+
+- A [Zilliz Cloud](https://cloud.zilliz.com/) account (or local Milvus instance)
 
 ## License
 
-Apache License 2.0 - see [LICENSE](LICENSE) for details.
+Apache License 2.0
