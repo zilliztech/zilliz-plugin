@@ -22,7 +22,7 @@ python3 -m pip install --upgrade zilliz-cli
 Verify installation:
 
 ```bash
-zilliz version
+zilliz --version
 ```
 
 ### Authentication

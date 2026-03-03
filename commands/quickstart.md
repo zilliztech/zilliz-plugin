@@ -26,7 +26,7 @@ python3 -m pip install zilliz-cli
 Verify:
 
 ```bash
-zilliz version
+zilliz --version
 ```
 
 ## Step 3: Authenticate
@@ -63,8 +63,8 @@ If no clusters exist, offer to create one:
 
 ```bash
 zilliz project list
-zilliz region list
-zilliz cluster create --name <name> --project-id <id> --region <region>
+zilliz cluster regions
+zilliz cluster create --type serverless --name <name> --project-id <id> --region <region>
 ```
 
 ## Step 5: Set Cluster Context

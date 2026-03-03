@@ -10,10 +10,10 @@ description: Use when the user wants to import bulk data into a Milvus collectio
 
 ## Commands Reference
 
-### Create an Import Job
+### Start an Import Job
 
 ```bash
-zilliz import-job create \
+zilliz import start \
   --cluster-id <cluster-id> \
   --collection <collection-name> \
   --body '{
@@ -27,21 +27,21 @@ Supported file formats: Parquet, JSON, CSV.
 ### List Import Jobs
 
 ```bash
-zilliz import-job list --cluster-id <cluster-id>
+zilliz import list --cluster-id <cluster-id>
 # Filter by database:
-zilliz import-job list --cluster-id <cluster-id> --database <db-name>
+zilliz import list --cluster-id <cluster-id> --database <db-name>
 # Pagination:
-zilliz import-job list --cluster-id <cluster-id> --page-size 10 --page 1
+zilliz import list --cluster-id <cluster-id> --page-size 10 --page 1
 ```
 
-### Check Import Progress
+### Check Import Status
 
 ```bash
-zilliz import-job get-progress --cluster-id <cluster-id> --job-id <job-id>
+zilliz import status --cluster-id <cluster-id> --job-id <job-id>
 ```
 
 ## Guidance
 
-- Import jobs run asynchronously. After creating a job, use `get-progress` to track status.
+- Import jobs run asynchronously. After starting a job, use `import status` to track progress.
 - The data files must be accessible from Zilliz Cloud (e.g., S3, GCS with proper integration configured).
 - The collection schema must match the data file structure.

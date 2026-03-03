@@ -26,33 +26,31 @@ zilliz cluster list --all
 zilliz cluster describe --cluster-id <cluster-id>
 ```
 
-### Create a Serverless Cluster
+### Create a Cluster
 
 ```bash
-zilliz cluster create --name <name> --project-id <project-id> --region <region-id>
-```
+# Serverless (default)
+zilliz cluster create --type serverless --name <name> --project-id <project-id> --region <region-id>
 
-To find available project IDs and regions:
-```bash
-zilliz project list
-zilliz region list
-```
+# Free tier
+zilliz cluster create --type free --name <name> --project-id <project-id> --region <region-id>
 
-### Create a Free Tier Cluster
-
-```bash
-zilliz cluster create-free --name <name> --project-id <project-id> --region <region-id>
-```
-
-### Create a Dedicated Cluster
-
-```bash
-zilliz cluster create-dedicated \
+# Dedicated
+zilliz cluster create --type dedicated \
   --name <name> \
   --project-id <project-id> \
   --region <region-id> \
   --cu-type <cu-type> \
   --cu-size <cu-size>
+```
+
+To find available project IDs, cloud providers, and regions:
+```bash
+zilliz project list
+zilliz cluster providers
+zilliz cluster regions
+# Filter by cloud provider:
+zilliz cluster regions --cloud-id <cloud-id>
 ```
 
 ### Delete a Cluster
@@ -84,7 +82,7 @@ zilliz cluster modify --cluster-id <cluster-id> --body '{"cuSize": 2, "replica":
 
 ## Guidance
 
-- Before creating a cluster, help the user choose a region by listing available regions first.
+- Before creating a cluster, help the user choose a region by running `zilliz cluster providers` and `zilliz cluster regions`.
 - Cluster creation is **asynchronous**. After `cluster create`, the cluster status will be `CREATING`. Poll with `zilliz cluster describe --cluster-id <id>` until the status becomes `RUNNING` before proceeding with data-plane operations.
 - Before deleting a cluster, always confirm with the user — this is irreversible.
 - After creating a cluster, suggest setting it as the active context with `zilliz context set --cluster-id <id>`.

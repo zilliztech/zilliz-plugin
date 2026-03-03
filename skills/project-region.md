@@ -1,6 +1,6 @@
 ---
 name: project-region
-description: Use when the user wants to manage Zilliz Cloud projects, query available cloud regions and providers, or manage storage volumes.
+description: Use when the user wants to manage Zilliz Cloud projects or storage volumes. For cloud regions and providers, see the cluster skill.
 ---
 
 ## Prerequisites
@@ -35,22 +35,6 @@ Upgrade a project:
 zilliz project upgrade --project-id <project-id> --plan <new-plan>
 ```
 
-### Regions and Cloud Providers
-
-List cloud providers:
-
-```bash
-zilliz region list-providers
-```
-
-List available regions:
-
-```bash
-zilliz region list
-# Filter by cloud provider:
-zilliz region list --cloud-id <cloud-id>
-```
-
 ### Volumes
 
 Create a volume:
@@ -73,6 +57,5 @@ zilliz volume delete --name <volume-name>
 
 ## Guidance
 
-- When the user wants to create a cluster, they need a project ID and region ID first. Guide them through listing projects and regions.
+- When the user wants to create a cluster, they need a project ID and region ID first. Guide them through `zilliz project list` and `zilliz cluster regions` (see cluster skill).
 - Before deleting a volume, confirm with the user.
-- Use `region list-providers` and `region list` to help users choose where to deploy.
