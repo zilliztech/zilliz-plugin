@@ -27,28 +27,44 @@ zilliz version
 
 ### Authentication
 
-The CLI supports two login methods. Ask the user which they prefer:
+**IMPORTANT:** Login commands (`zilliz login`, `zilliz configure`) require an interactive terminal and CANNOT run inside Claude Code. Always instruct the user to run these in their own terminal.
+
+Check if already logged in:
+
+```bash
+zilliz auth status
+```
+
+If not logged in, tell the user to open their own terminal and run one of the following:
 
 **Option 1: Browser-based login (OAuth) — full feature access**
 
-```bash
+```
 zilliz login
 ```
 
 - Opens a browser for authentication
 - Retrieves user info, organization data, and API keys
-- Use `--no-browser` if running in a headless environment (displays a URL to visit manually)
+- Use `--no-browser` in headless environments (displays a URL to visit manually)
 
 **Option 2: API Key — simple, no browser needed**
 
-```bash
-zilliz login --api-key
+```
+zilliz configure
 ```
 
 - Prompts for an API key (found in Zilliz Cloud console under API Keys)
 - Some features like organization switching are not available
 
-### Check Login Status
+**Option 3: Environment variable**
+
+User can add to their shell profile (`.zshrc` / `.bashrc`):
+
+```
+export ZILLIZ_API_KEY=<your-api-key>
+```
+
+After the user completes authentication, verify by running:
 
 ```bash
 zilliz auth status
@@ -56,7 +72,9 @@ zilliz auth status
 
 ### Switch Organization
 
-```bash
+These commands require an interactive terminal. Instruct the user to run in their own terminal:
+
+```
 # Interactive selection
 zilliz auth switch
 
@@ -70,16 +88,9 @@ zilliz auth switch <org-id>
 zilliz logout
 ```
 
-### Configure API Key Directly
+### View Current Config
 
 ```bash
-# Interactive prompt
-zilliz configure
-
-# Set specific key
-zilliz configure set api_key
-
-# View current config
 zilliz configure list
 ```
 
@@ -108,6 +119,8 @@ zilliz context current
 
 - Always check prerequisites before executing any command.
 - If a prerequisite fails, fix it before proceeding — do not skip ahead.
-- When login fails, suggest the alternative login method.
+- NEVER run `zilliz login`, `zilliz configure`, or `zilliz auth switch` inside Claude Code — they require interactive input. Always instruct the user to run these in their own terminal.
+- NEVER ask the user to paste API keys into the chat — this is a security risk. Guide them to configure credentials in their own terminal instead.
+- After the user reports login is complete, verify with `zilliz auth status`.
 - After setting context, verify with `zilliz context current`.
 - For data-plane commands in other skills, always verify context is set first.

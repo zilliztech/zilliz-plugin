@@ -37,10 +37,19 @@ Check if already logged in:
 zilliz auth status
 ```
 
-If not logged in, ask the user which authentication method they prefer:
+If not logged in, instruct the user to open their own terminal and run one of:
 
-1. **Browser login (recommended)** — Run `zilliz login`. Opens browser for OAuth authentication. Full feature access including organization management.
-2. **API Key** — Run `zilliz login --api-key`. Simpler setup, just paste an API key from the Zilliz Cloud console.
+1. **Browser login (recommended)** — `zilliz login` — opens browser for OAuth, full feature access.
+2. **API Key** — `zilliz configure` — prompts for API key, simpler setup.
+3. **Environment variable** — add `export ZILLIZ_API_KEY=<key>` to `.zshrc` / `.bashrc`.
+
+**IMPORTANT:** These commands require interactive input and cannot run inside Claude Code. Do NOT ask the user to paste API keys into the chat.
+
+Wait for the user to confirm login is complete, then verify:
+
+```bash
+zilliz auth status
+```
 
 ## Step 4: Select a Cluster
 
