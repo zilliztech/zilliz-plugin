@@ -7,7 +7,7 @@ description: Use when the user needs to install zilliz-cli, log in to Zilliz Clo
 
 Before running any zilliz-cli command, verify the following in order:
 
-1. **CLI installed?** Run `pip show zilliz-cli`. If not installed, run `pip install zilliz-cli`.
+1. **CLI installed?** Run `python3 -m pip show zilliz-cli`. If not installed, run `python3 -m pip install zilliz-cli`.
 2. **Logged in?** Run `zilliz auth status`. If not logged in, guide through login (see below).
 3. **Context set?** (Only for data-plane operations) Run `zilliz context current`. If no context, guide through context setup.
 
@@ -16,7 +16,7 @@ Before running any zilliz-cli command, verify the following in order:
 ### Install CLI
 
 ```bash
-pip install zilliz-cli
+python3 -m pip install zilliz-cli
 ```
 
 Verify installation:
@@ -54,7 +54,10 @@ zilliz configure
 ```
 
 - Prompts for an API key (found in Zilliz Cloud console under API Keys)
-- Some features like organization switching are not available
+- Limitations compared to OAuth login:
+  - Organization switching not available
+  - On Serverless clusters: database management, user/role management may be restricted
+  - Some control-plane operations may require OAuth login
 
 **Option 3: Environment variable**
 
@@ -115,12 +118,39 @@ zilliz context set --database <db-name>
 zilliz context current
 ```
 
+## Output Format
+
+All zilliz-cli commands support `--output json` for structured, machine-readable output. Use this when you need to parse results programmatically:
+
+```bash
+zilliz cluster list --output json
+zilliz collection describe --name <name> --output json
+```
+
+Available formats: `json`, `table`, `text`. Default is `text`.
+
+## Cluster Type Differences
+
+Different cluster types have different feature support:
+
+| Feature | Free | Serverless | Dedicated |
+|---|---|---|---|
+| Collection CRUD | Yes | Yes | Yes |
+| Vector search/query | Yes | Yes | Yes |
+| Database create/drop | No | No | Yes |
+| User/role management | No | Limited | Yes |
+| Backup management | No | Yes | Yes |
+| Cluster modify | No | No | Yes |
+
+When a command fails with a permissions error, check the cluster type first — the feature may not be available on that cluster type.
+
 ## Guidance
 
 - Always check prerequisites before executing any command.
 - If a prerequisite fails, fix it before proceeding — do not skip ahead.
-- NEVER run `zilliz login`, `zilliz configure`, or `zilliz auth switch` inside Claude Code — they require interactive input. Always instruct the user to run these in their own terminal.
+- NEVER run `zilliz login`, `zilliz configure`, or `zilliz auth switch` (without arguments) inside Claude Code — they require interactive input. Always instruct the user to run these in their own terminal.
 - NEVER ask the user to paste API keys into the chat — this is a security risk. Guide them to configure credentials in their own terminal instead.
 - After the user reports login is complete, verify with `zilliz auth status`.
 - After setting context, verify with `zilliz context current`.
 - For data-plane commands in other skills, always verify context is set first.
+- When a command fails unexpectedly, consider whether the cluster type or auth mode may be the cause.
