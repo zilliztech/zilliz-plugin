@@ -107,7 +107,7 @@ zilliz role drop --name <role-name>
 
 ## Guidance
 
-- Built-in roles: `admin` (full access), `public` (read-only).
+- Built-in roles: `admin` (full access), `public` (no privileges by default — must be granted explicitly).
 - When setting up RBAC, suggest a workflow: create role, grant privileges, create user, assign role.
 - Before dropping a user or role, confirm with the user.
 - Use `*` as object-name to grant privilege on all objects of that type.
