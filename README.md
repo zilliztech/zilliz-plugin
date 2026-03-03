@@ -1,6 +1,6 @@
 # Zilliz Cloud Plugin for Claude Code
 
-Your Zilliz Cloud console in Claude Code. This plugin enables Claude to operate the [zilliz-cli](https://github.com/zilliztech/zilliz-cli), bringing the full power of [Zilliz Cloud](https://zilliz.com/) — cluster management, collection operations, vector search, RBAC, backups, and more — into your terminal through natural language.
+Your Zilliz Cloud console in Claude Code. This plugin enables Claude to operate the `zilliz-cli`, bringing the full power of [Zilliz Cloud](https://zilliz.com/) — cluster management, collection operations, vector search, RBAC, backups, and more — into your terminal through natural language.
 
 ## What It Does
 
