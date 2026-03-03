@@ -1,20 +1,34 @@
 # Zilliz Cloud Plugin for Claude Code
 
-Manage [Zilliz Cloud](https://zilliz.com/) clusters and [Milvus](https://milvus.io/) vector databases directly from [Claude Code](https://claude.ai/code).
+Your Zilliz Cloud console in Claude Code. This plugin enables Claude to operate the `zilliz-cli`, bringing the full power of [Zilliz Cloud](https://zilliz.com/) — cluster management, collection operations, vector search, RBAC, backups, and more — into your terminal through natural language.
 
 ## What It Does
 
-This plugin teaches Claude how to use the `zilliz-cli` to manage your Zilliz Cloud environment. Instead of memorizing CLI commands, just describe what you want in natural language:
+Instead of memorizing CLI commands or switching to the web console, just describe what you want:
 
-- "Create a new collection with 768-dimension vectors"
-- "Search for similar items in my product collection"
-- "Show me the status of my cluster"
-- "Set up a backup policy for my production cluster"
+- "Create a serverless cluster in us-east-1 and set up a collection with 768-dimension vectors"
+- "Search for similar items in my product collection with filter age > 20"
+- "Show me the status of all my clusters and collections"
+- "Set up a daily backup policy for my production cluster with 7-day retention"
+- "Create a role with read-only access to the analytics collection"
+- "Import data from S3 into my embeddings collection"
 
 ## Installation
 
+### From Claude Code Marketplace
+
+Search for **zilliz** in the plugin directory, or add the marketplace manually:
+
+```
+/plugin marketplace add zilliztech/zilliz-plugin
+```
+
+Then install via the Discover tab in `/plugin`.
+
+### Direct Install
+
 ```bash
-/install zilliztech/zilliz-plugin
+/plugin install zilliz@zilliztech/zilliz-plugin
 ```
 
 ## Quick Start
