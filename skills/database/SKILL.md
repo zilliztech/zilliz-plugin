@@ -37,6 +37,7 @@ zilliz database drop --name <db-name>
 
 ## Guidance
 
+- Database create, describe, and drop operations are only available on **Dedicated** clusters. `database list` works on all cluster types.
 - Every cluster has a "default" database.
 - Before dropping a database, confirm with the user — all collections in it will be deleted.
 - After creating a database, suggest switching context: `zilliz context set --database <db-name>`.

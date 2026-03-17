@@ -19,19 +19,19 @@ zilliz partition list --collection <collection-name>
 ### Create a Partition
 
 ```bash
-zilliz partition create --collection <collection-name> --name <partition-name>
+zilliz partition create --collection <collection-name> --partition <partition-name>
 ```
 
 ### Check if Partition Exists
 
 ```bash
-zilliz partition has --collection <collection-name> --name <partition-name>
+zilliz partition has --collection <collection-name> --partition <partition-name>
 ```
 
 ### Get Partition Statistics
 
 ```bash
-zilliz partition get-stats --collection <collection-name> --name <partition-name>
+zilliz partition get-stats --collection <collection-name> --partition <partition-name>
 ```
 
 ### Load Partitions
@@ -49,7 +49,7 @@ zilliz partition release --collection <collection-name> --names '["partition1", 
 ### Drop a Partition
 
 ```bash
-zilliz partition drop --collection <collection-name> --name <partition-name>
+zilliz partition drop --collection <collection-name> --partition <partition-name>
 ```
 
 ## Guidance

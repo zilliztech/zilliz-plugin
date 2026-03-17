@@ -10,6 +10,8 @@ description: Use when the user wants to create, list, describe, or drop indexes 
 
 ## Commands Reference
 
+All index commands accept an optional `--database <db-name>` flag. If omitted, the database from the current context is used.
+
 ### Create an Index
 
 ```bash

@@ -13,20 +13,24 @@ description: Use when the user wants to create, list, describe, delete, export, 
 ### Create a Backup
 
 ```bash
-zilliz backup create --cluster-id <cluster-id> --backup-type <full|incremental>
-# Advanced with body:
-zilliz backup create --cluster-id <cluster-id> --backup-type full --body '{"collections": ["col1"]}'
+# Full cluster backup (default)
+zilliz backup create --cluster-id in01-xxxxxxxxxxxx
+
+# Collection-level backup
+zilliz backup create --cluster-id in01-xxxxxxxxxxxx --database default --collection my_col
 ```
+
+The backup type is automatically derived: if `--collection` is provided, it's a COLLECTION backup; otherwise it's a CLUSTER backup.
 
 ### List Backups
 
 ```bash
 zilliz backup list
-# Filter:
 zilliz backup list --cluster-id <cluster-id>
 zilliz backup list --project-id <project-id>
-zilliz backup list --backup-type full
-zilliz backup list --creation-method manual
+zilliz backup list --creation-method manual   # or: auto
+zilliz backup list --backup-type CLUSTER      # or: COLLECTION
+zilliz backup list --page-size 10 --page 1
 ```
 
 ### Describe a Backup
@@ -60,8 +64,10 @@ zilliz backup restore-cluster \
   --project-id <project-id> \
   --name <new-cluster-name> \
   --cu-size <size> \
-  --collection-status <loaded|unloaded>
+  --collection-status LOADED
 ```
+
+Valid `--collection-status` values: `LOADED`, `NOT_LOADED`.
 
 ### Restore Specific Collections
 
@@ -78,19 +84,24 @@ zilliz backup restore-collection \
 Get current policy:
 
 ```bash
-zilliz backup get-policy --cluster-id <cluster-id>
+zilliz backup describe-policy --cluster-id <cluster-id>
 ```
 
-Set backup policy:
+Update backup policy:
 
 ```bash
-zilliz backup set-policy \
-  --cluster-id <cluster-id> \
-  --enabled true \
-  --frequency daily \
-  --start-time "02:00" \
-  --retention-days 7
+# Enable daily backup at 2am UTC with 7-day retention
+zilliz backup update-policy --cluster-id in01-xxxx --auto-backup true --frequency daily --start-time 02:00 --retention-days 7
+
+# Enable backup on Mon/Wed/Fri at 3am UTC
+zilliz backup update-policy --cluster-id in01-xxxx --auto-backup true --frequency 1,3,5 --start-time 03:00-05:00 --retention-days 14
+
+# Disable auto-backup
+zilliz backup update-policy --cluster-id in01-xxxx --auto-backup false
 ```
+
+Frequency format: `daily | weekdays | weekends | 1-7 (1=Mon, 7=Sun) e.g. 1,3,5`
+Start time format: `HH:MM` or `HH:MM-HH:MM` (time window)
 
 ## Guidance
 

@@ -18,3 +18,4 @@ Thumbs.db
 # Claude
 .claude/
 plugin-submit-form
+.plan/
