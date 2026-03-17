@@ -10,6 +10,8 @@ description: Use when the user wants to search, query, insert, upsert, get, or d
 
 ## Commands Reference
 
+All vector commands accept an optional `--database <db-name>` flag to target a non-default database. If omitted, the database from the current context is used.
+
 ### Vector Search
 
 ```bash

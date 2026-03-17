@@ -47,7 +47,13 @@ zilliz login
 - Retrieves user info, organization data, and API keys
 - Use `--no-browser` in headless environments (displays a URL to visit manually)
 
-**Option 2: API Key — simple, no browser needed**
+**Option 2a: API Key via login command**
+
+```
+zilliz login --api-key
+```
+
+**Option 2b: API Key via configure (legacy)**
 
 ```
 zilliz configure
@@ -73,6 +79,16 @@ After the user completes authentication, verify by running:
 zilliz auth status
 ```
 
+### Configure Subcommands
+
+```bash
+zilliz configure              # Interactive API key setup
+zilliz configure list          # Show all config values
+zilliz configure set <key> <value>  # Set a config value
+zilliz configure get <key>     # Get a config value
+zilliz configure clear         # Clear all credentials
+```
+
 ### Switch Organization
 
 These commands require an interactive terminal. Instruct the user to run in their own terminal:
@@ -89,12 +105,6 @@ zilliz auth switch <org-id>
 
 ```bash
 zilliz logout
-```
-
-### View Current Config
-
-```bash
-zilliz configure list
 ```
 
 ### Set Cluster Context

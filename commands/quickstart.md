@@ -17,10 +17,10 @@ Check if already installed:
 python3 -m pip show zilliz-cli
 ```
 
-If not installed:
+If not installed or needs upgrading:
 
 ```bash
-python3 -m pip install zilliz-cli
+python3 -m pip install --upgrade zilliz-cli
 ```
 
 Verify:
@@ -40,8 +40,9 @@ zilliz auth status
 If not logged in, instruct the user to open their own terminal and run one of:
 
 1. **Browser login (recommended)** — `zilliz login` — opens browser for OAuth, full feature access.
-2. **API Key** — `zilliz configure` — prompts for API key, simpler setup.
-3. **Environment variable** — add `export ZILLIZ_API_KEY=<key>` to `.zshrc` / `.bashrc`.
+2. **API Key via login** — `zilliz login --api-key` — prompts for API key, no browser needed.
+3. **API Key via configure (legacy)** — `zilliz configure` — prompts for API key, simpler setup.
+4. **Environment variable** — add `export ZILLIZ_API_KEY=<key>` to `.zshrc` / `.bashrc`.
 
 **IMPORTANT:** These commands require interactive input and cannot run inside Claude Code. Do NOT ask the user to paste API keys into the chat.
 

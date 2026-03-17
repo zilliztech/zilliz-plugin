@@ -26,14 +26,16 @@ zilliz project describe --project-id <project-id>
 Create a project:
 
 ```bash
-zilliz project create --name <project-name> --plan <plan-type>
+zilliz project create --name <project-name> --plan <Free|Serverless|Standard|Enterprise>
 ```
 
 Upgrade a project:
 
 ```bash
-zilliz project upgrade --project-id <project-id> --plan <new-plan>
+zilliz project upgrade --project-id <project-id> --plan <Serverless|Standard|Enterprise>
 ```
+
+Note: `upgrade` does not include `Free` as a valid target plan.
 
 ### Volumes
 

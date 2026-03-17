@@ -9,6 +9,8 @@ description: Use when the user wants to create, list, describe, drop, rename, lo
 
 ## Commands Reference
 
+All collection commands accept an optional `--database <db-name>` flag to target a non-default database. If omitted, the database from the current context is used.
+
 ### List Collections
 
 ```bash
