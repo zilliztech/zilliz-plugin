@@ -10,46 +10,55 @@ description: Use when the user wants to create, list, load, release, or drop par
 
 ## Commands Reference
 
-### List Partitions
-
-```bash
-zilliz partition list --collection <collection-name>
-```
+All partition commands accept an optional `--database <db-name>` flag. If omitted, the database from the current context is used.
 
 ### Create a Partition
 
 ```bash
 zilliz partition create --collection <collection-name> --partition <partition-name>
+# Optional: --database <database-name>
 ```
 
-### Check if Partition Exists
+### List Partitions
 
 ```bash
-zilliz partition has --collection <collection-name> --partition <partition-name>
-```
-
-### Get Partition Statistics
-
-```bash
-zilliz partition get-stats --collection <collection-name> --partition <partition-name>
-```
-
-### Load Partitions
-
-```bash
-zilliz partition load --collection <collection-name> --names '["partition1", "partition2"]'
-```
-
-### Release Partitions
-
-```bash
-zilliz partition release --collection <collection-name> --names '["partition1", "partition2"]'
+zilliz partition list --collection <collection-name>
+# Optional: --database <database-name>
 ```
 
 ### Drop a Partition
 
 ```bash
-zilliz partition drop --collection <collection-name> --partition <partition-name>
+zilliz partition drop --collection <collection-name> --partition <partition-name-to-drop>
+# Optional: --database <database-name>
+```
+
+### Check if a Partition Exists
+
+```bash
+zilliz partition has --collection <collection-name> --partition <partition-name>
+# Optional: --database <database-name>
+```
+
+### Get Statistics
+
+```bash
+zilliz partition get-stats --collection <collection-name> --partition <partition-name>
+# Optional: --database <database-name>
+```
+
+### Load a Partition
+
+```bash
+zilliz partition load --collection <collection-name> --names '["partition1", "partition2"]'
+# Optional: --database <database-name>
+```
+
+### Release a Partition
+
+```bash
+zilliz partition release --collection <collection-name> --names '["partition1", "partition2"]'
+# Optional: --database <database-name>
 ```
 
 ## Guidance
@@ -57,5 +66,6 @@ zilliz partition drop --collection <collection-name> --partition <partition-name
 - Every collection has a default `_default` partition.
 - Partitions allow organizing data for more targeted searches.
 - A partition must be loaded before it can be searched.
-- Before dropping a partition, confirm with the user — all data in it will be deleted.
+- Before dropping a partition, confirm with the user -- all data in it will be deleted.
 - Use partition stats to check row counts per partition.
+- For filter expression syntax used in vector operations on partitions, see the vector skill.

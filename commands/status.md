@@ -41,15 +41,18 @@ zilliz database list --output json
 
 ## Step 5: Collections Summary
 
+For each database returned in Step 4, gather collection information:
+
 ```bash
-zilliz collection list --output json
+zilliz collection list --database <db-name> --output json
 ```
 
-For each collection, gather stats:
+For each collection, gather stats and index info:
 
 ```bash
-zilliz collection get-stats --name <name> --output json
-zilliz collection get-load-state --name <name> --output json
+zilliz collection get-stats --name <name> --database <db-name> --output json
+zilliz collection get-load-state --name <name> --database <db-name> --output json
+zilliz index list --collection <name> --database <db-name> --output json
 ```
 
 ## Step 6: Present Summary
@@ -58,13 +61,14 @@ Format the results as a readable summary:
 
 **Cluster:** <name> (<cluster-id>)
 **Status:** RUNNING | **Region:** <region> | **Plan:** <plan>
-**Database:** <current-db>
 
-**Collections:**
+For each database, show its collections:
 
-| Collection | Rows | Load State |
-|---|---|---|
-| my_collection | 10,000 | Loaded |
-| ... | ... | ... |
+**Database:** <db-name>
+
+| Collection | Rows | Load State | Indexes |
+|---|---|---|---|
+| my_collection | 10,000 | Loaded | vector_idx (AUTOINDEX) |
+| ... | ... | ... | ... |
 
 If the cluster is suspended, show a warning that data operations are unavailable.

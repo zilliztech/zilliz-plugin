@@ -11,104 +11,111 @@ description: Use when the user wants to manage database users, roles, passwords,
 
 ### Users
 
-List users:
-
-```bash
-zilliz user list
-```
-
-Create a user:
+#### Create a User
 
 ```bash
 zilliz user create --user <username> --password <password>
 ```
 
-Describe a user (shows assigned roles):
+#### List Users
+
+```bash
+zilliz user list
+```
+
+#### Describe a User
 
 ```bash
 zilliz user describe --user <username>
 ```
 
-Update password:
+#### Drop a User
 
 ```bash
-zilliz user update-password --user <username> --password <old-password> --new-password <new-password>
+zilliz user drop --user <username-to-drop>
 ```
 
-Grant a role to a user:
+#### Update Password
 
 ```bash
-zilliz user grant-role --user <username> --role <role-name>
+zilliz user update-password \
+  --user <username> \
+  --password <current-password> \
+  --new-password <new-password>
 ```
 
-Revoke a role from a user:
+#### Grant a Role to a User
 
 ```bash
-zilliz user revoke-role --user <username> --role <role-name>
+zilliz user grant-role --user <username> --role <role-name-to-grant>
 ```
 
-Drop a user:
+#### Revoke a Role from a User
 
 ```bash
-zilliz user drop --user <username>
+zilliz user revoke-role --user <username> --role <role-name-to-revoke>
 ```
 
 ### Roles
 
-List roles:
-
-```bash
-zilliz role list
-```
-
-Create a role:
+#### Create a Role
 
 ```bash
 zilliz role create --role <role-name>
 ```
 
-Describe a role (shows granted privileges):
+#### List Roles
+
+```bash
+zilliz role list
+```
+
+#### Describe a Role
 
 ```bash
 zilliz role describe --role <role-name>
 ```
 
-Grant a privilege:
+#### Drop a Role
+
+```bash
+zilliz role drop --role <role-name-to-drop>
+```
+
+#### Grant a Privilege
 
 ```bash
 zilliz role grant-privilege \
   --role <role-name> \
-  --object-type <Collection|Global|Database> \
-  --object-name <name-or-*> \
+  --object-type <Global|Collection|Database> \
+  --object-name <object-name> \
   --privilege <privilege-name>
-# Optional: --database <db-name>
+# Optional: --database <database-name>
 ```
 
-Common privileges:
-- Collection: `Search`, `Query`, `Insert`, `Delete`, `CreateIndex`, `DropCollection`
-- Global: `CreateCollection`, `All`
-- Database: `ListCollections`
-
-Revoke a privilege:
+#### Revoke a Privilege
 
 ```bash
 zilliz role revoke-privilege \
   --role <role-name> \
-  --object-type <Collection|Global|Database> \
-  --object-name <name-or-*> \
+  --object-type <Global|Collection|Database> \
+  --object-name <object-name> \
   --privilege <privilege-name>
+# Optional: --database <database-name>
 ```
 
-Drop a role:
+## Common Privileges
 
-```bash
-zilliz role drop --role <role-name>
-```
+Common privileges by object type:
+
+- **Collection**: `Search`, `Query`, `Insert`, `Delete`, `CreateIndex`, `DropCollection`
+- **Global**: `CreateCollection`, `All`
+- **Database**: `ListCollections`
 
 ## Guidance
 
 - User and role management is only available on **Dedicated** clusters.
-- Built-in roles: `admin` (full access), `public` (no privileges by default — must be granted explicitly).
+- Built-in roles: `admin` (full access), `public` (no privileges by default -- must be granted explicitly).
 - When setting up RBAC, suggest a workflow: create role, grant privileges, create user, assign role.
 - Before dropping a user or role, confirm with the user.
 - Use `*` as object-name to grant privilege on all objects of that type.

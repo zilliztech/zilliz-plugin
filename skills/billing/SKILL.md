@@ -6,7 +6,7 @@ description: Use when the user wants to check usage, view invoices, or manage pa
 ## Prerequisites
 
 1. CLI installed and logged in via OAuth (see setup skill).
-2. Billing features require OAuth login — API Key mode may not have access.
+2. Billing features require OAuth login -- API Key mode may not have access.
 
 ## Commands Reference
 
@@ -50,14 +50,16 @@ zilliz billing invoices --invoice-id inv-xxxxxxxxxxxx
 
 ### Bind a Credit Card
 
-This command accepts card details as flags but handles sensitive data. For security, instruct the user to run in their own terminal:
-
 ```bash
-zilliz billing bind-card --card-number <number> --exp-month <1-12> --exp-year <year> --cvc <code>
+zilliz billing bind-card \
+  --card-number <credit-card-number> \
+  --exp-month <expiration-month> \
+  --exp-year <expiration-year> \
+  --cvc <card-verification-code>
 ```
 
 ## Guidance
 
 - Billing commands require OAuth login, not API Key authentication.
 - When the user asks about costs or spending, use `billing usage` with an appropriate time range.
-- The `bind-card` command handles sensitive card data — always instruct the user to run it in their own terminal, never inside Claude Code.
+- The `bind-card` command handles sensitive card data -- always instruct the user to run it in their own terminal, never inside Claude Code.

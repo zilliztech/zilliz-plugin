@@ -13,32 +13,28 @@ description: Use when the user wants to import bulk data into a Milvus collectio
 ### Start an Import Job
 
 ```bash
-zilliz import start \
-  --cluster-id <cluster-id> \
-  --collection <collection-name> \
-  --body '{
-    "files": [["s3://bucket/path/to/file.parquet"]],
-    "options": {}
-  }'
+zilliz import start --cluster-id <target-cluster-id> --collection <target-collection-name>
+# Or use raw JSON: --body '{"files": [["s3://bucket/path/data.parquet"]]}'
 ```
 
-Supported file formats: Parquet, JSON, CSV.
-
-### List Import Jobs
+### List Imports
 
 ```bash
 zilliz import list --cluster-id <cluster-id>
-# Filter by database:
-zilliz import list --cluster-id <cluster-id> --database <db-name>
-# Pagination:
-zilliz import list --cluster-id <cluster-id> --page-size 10 --page 1
+# Optional: --database <database-name>
 ```
 
 ### Check Import Status
 
 ```bash
-zilliz import status --cluster-id <cluster-id> --job-id <job-id>
+zilliz import status --job-id <import-job-id> --cluster-id <cluster-id>
 ```
+
+## Integration Setup
+
+Import requires a cloud storage integration to access data files. The `integration-id` is configured in the Zilliz Cloud console under **Project Settings > Integrations**. Ensure the integration has read access to the source bucket and path.
+
+Supported file formats: Parquet, JSON, CSV.
 
 ## Guidance
 
