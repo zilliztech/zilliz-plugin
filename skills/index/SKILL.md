@@ -15,44 +15,42 @@ All index commands accept an optional `--database <db-name>` flag. If omitted, t
 ### Create an Index
 
 ```bash
-zilliz index create --collection <collection-name> --body '{
-  "indexParams": [
-    {
-      "fieldName": "vector",
-      "indexName": "vector_index",
-      "metricType": "COSINE",
-      "indexType": "AUTOINDEX"
-    }
-  ]
-}'
+zilliz index create --collection <collection-name>
+# Optional: --database <database-name>
+# Or use raw JSON: --body '{"indexParams": [{"fieldName": "vector", "indexType": "AUTOINDEX", "metricType": "COSINE"}]}'
 ```
-
-Common index types:
-- `AUTOINDEX` — recommended, automatically selects the best index
-- `IVF_FLAT`, `IVF_SQ8`, `HNSW` — manual selection for advanced users
-
-Common metric types:
-- `COSINE` — cosine similarity (default)
-- `L2` — Euclidean distance
-- `IP` — inner product
 
 ### List Indexes
 
 ```bash
 zilliz index list --collection <collection-name>
+# Optional: --database <database-name>
 ```
 
 ### Describe an Index
 
 ```bash
 zilliz index describe --collection <collection-name> --index-name <index-name>
+# Optional: --database <database-name>
 ```
 
 ### Drop an Index
 
 ```bash
-zilliz index drop --collection <collection-name> --index-name <index-name>
+zilliz index drop --collection <collection-name> --index-name <index-name-to-drop>
+# Optional: --database <database-name>
 ```
+
+## Index Types
+
+Common index types:
+- `AUTOINDEX` -- recommended, automatically selects the best index
+- `IVF_FLAT`, `IVF_SQ8`, `HNSW` -- manual selection for advanced users
+
+Common metric types:
+- `COSINE` -- cosine similarity (default)
+- `L2` -- Euclidean distance
+- `IP` -- inner product
 
 ## Guidance
 

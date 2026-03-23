@@ -11,53 +11,58 @@ description: Use when the user wants to manage Zilliz Cloud projects or storage 
 
 ### Projects
 
-List projects:
-
-```bash
-zilliz project list
-```
-
-Describe a project:
-
-```bash
-zilliz project describe --project-id <project-id>
-```
-
-Create a project:
+#### Create a Project
 
 ```bash
 zilliz project create --name <project-name> --plan <Free|Serverless|Standard|Enterprise>
 ```
 
-Upgrade a project:
+#### List Projects
 
 ```bash
-zilliz project upgrade --project-id <project-id> --plan <Serverless|Standard|Enterprise>
+zilliz project list
 ```
 
-Note: `upgrade` does not include `Free` as a valid target plan.
+#### Describe a Project
+
+```bash
+zilliz project describe --project-id <project-id>
+```
+
+#### Upgrade a Project
+
+```bash
+zilliz project upgrade --project-id <project-id>
+# Optional: --plan <Serverless|Standard|Enterprise>
+```
 
 ### Volumes
 
-Create a volume:
+#### Create a Volume
 
 ```bash
-zilliz volume create --project-id <project-id> --region <region-id> --name <volume-name>
+zilliz volume create \
+  --project-id <project-id> \
+  --region <cloud-region> \
+  --name <volume-name>
 ```
 
-List volumes:
+#### List Volumes
 
 ```bash
 zilliz volume list --project-id <project-id>
+# Pagination: --page-size <n> --page <n>
+# Fetch all pages: --all
 ```
 
-Delete a volume:
+#### Delete a Volume
 
 ```bash
-zilliz volume delete --name <volume-name>
+zilliz volume delete --name <volume-name-to-delete>
 ```
 
 ## Guidance
 
 - When the user wants to create a cluster, they need a project ID and region ID first. Guide them through `zilliz project list` and `zilliz cluster regions` (see cluster skill).
+- Project `upgrade` does not include `Free` as a valid target plan -- only Serverless, Standard, and Enterprise.
 - Before deleting a volume, confirm with the user.

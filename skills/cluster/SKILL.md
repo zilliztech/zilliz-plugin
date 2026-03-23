@@ -6,18 +6,51 @@ description: Use when the user wants to create, list, describe, delete, suspend,
 ## Prerequisites
 
 1. CLI installed and logged in (see setup skill).
-2. No cluster context required — these are control-plane operations.
+2. No cluster context required -- these are control-plane operations.
 
 ## Commands Reference
+
+### Create a Cluster
+
+```bash
+# Serverless cluster
+zilliz cluster create \
+  --name <cluster-name> \
+  --type serverless \
+  --project-id <project-id> \
+  --region <region-id>
+
+# Free-tier cluster
+zilliz cluster create \
+  --name <cluster-name> \
+  --type free \
+  --project-id <project-id> \
+  --region <region-id>
+
+# Dedicated cluster
+zilliz cluster create \
+  --name <cluster-name> \
+  --type dedicated \
+  --project-id <project-id> \
+  --region <region-id> \
+  --cu-type <Performance-optimized|Capacity-optimized> \
+  --cu-size <cu-size>
+```
+
+To find available project IDs, cloud providers, and regions:
+
+```bash
+zilliz project list
+zilliz cluster providers
+zilliz cluster regions --cloud-id <aws|gcp|azure>
+```
 
 ### List Clusters
 
 ```bash
 zilliz cluster list
-# Paginated:
-zilliz cluster list --page-size 10 --page 1
-# Fetch all pages:
-zilliz cluster list --all
+# Pagination: --page-size <n> --page <n>
+# Fetch all pages: --all
 ```
 
 ### Describe a Cluster
@@ -26,65 +59,50 @@ zilliz cluster list --all
 zilliz cluster describe --cluster-id <cluster-id>
 ```
 
-### Create a Cluster
+### Modify a Cluster
 
 ```bash
-# Serverless (default)
-zilliz cluster create --type serverless --name <name> --project-id <project-id> --region <region-id>
-
-# Free tier
-zilliz cluster create --type free --name <name> --project-id <project-id> --region <region-id>
-
-# Dedicated
-zilliz cluster create --type dedicated \
-  --name <name> \
-  --project-id <project-id> \
-  --region <region-id> \
-  --cu-type <cu-type> \
-  --cu-size <cu-size>
-```
-
-To find available project IDs, cloud providers, and regions:
-```bash
-zilliz project list
-zilliz cluster providers
-zilliz cluster regions
-# Filter by cloud provider:
-zilliz cluster regions --cloud-id <cloud-id>
-```
-
-### Delete a Cluster
-
-```bash
-zilliz cluster delete --cluster-id <cluster-id>
+zilliz cluster modify --cluster-id <cluster-id-to-modify>
+# Optional: --cu-size <number-of-compute-units>, --replica <number-of-replicas>
+# Or use raw JSON: --body '{"cuSize": 2, "replica": 2}'
 ```
 
 ### Suspend a Cluster
 
 ```bash
-zilliz cluster suspend --cluster-id <cluster-id>
+zilliz cluster suspend --cluster-id <cluster-id-to-suspend>
 ```
 
 ### Resume a Cluster
 
 ```bash
-zilliz cluster resume --cluster-id <cluster-id>
+zilliz cluster resume --cluster-id <cluster-id-to-resume>
 ```
 
-### Modify a Cluster
+### Delete a Cluster
 
 ```bash
-zilliz cluster modify --cluster-id <cluster-id> --cu-size <new-size>
-zilliz cluster modify --cluster-id <cluster-id> --replica <count>
-# Or use raw JSON body:
-zilliz cluster modify --cluster-id <cluster-id> --body '{"cuSize": 2, "replica": 2}'
+zilliz cluster delete --cluster-id <cluster-id-to-delete>
+```
+
+### List Cloud Providers
+
+```bash
+zilliz cluster providers
+```
+
+### List Regions
+
+```bash
+zilliz cluster regions
+# Optional: --cloud-id <aws|gcp|azure>
 ```
 
 ## Guidance
 
 - Before creating a cluster, help the user choose a region by running `zilliz cluster providers` and `zilliz cluster regions`.
 - Cluster creation is **asynchronous**. After `cluster create`, the cluster status will be `CREATING`. Poll with `zilliz cluster describe --cluster-id <id>` until the status becomes `RUNNING` before proceeding with data-plane operations.
-- Before deleting a cluster, always confirm with the user — this is irreversible.
+- Before deleting a cluster, always confirm with the user -- this is irreversible.
 - After creating a cluster, suggest setting it as the active context with `zilliz context set --cluster-id <id>`.
 - When a cluster is suspended, remind the user it must be resumed before data-plane operations.
 - Different cluster types have different capabilities. See the "Cluster Type Differences" table in the setup skill for details.

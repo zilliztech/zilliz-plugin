@@ -10,6 +10,8 @@ description: Use when the user wants to check cluster status, collection statist
 
 ## Commands Reference
 
+All monitoring commands that target collections accept an optional `--database <db-name>` flag. If omitted, the database from the current context is used.
+
 ### Cluster Status
 
 ```bash
@@ -27,11 +29,14 @@ List all collections with their stats:
 ```bash
 # List collections
 zilliz collection list
+zilliz collection list --database <db-name>
 
 # For each collection, get stats and load state:
 zilliz collection get-stats --name <collection-name>
 zilliz collection get-load-state --name <collection-name>
 ```
+
+If the cluster has multiple databases, iterate through each database by running `zilliz database list` first, then `zilliz collection list --database <db-name>` for each.
 
 ### Database Overview
 
