@@ -152,7 +152,7 @@ role.add_user("analyst_user")
 
 - **At rest**: AES-256 encryption (default)
 - **In transit**: TLS 1.2+ (required)
-- **Customer-managed keys**: Available for Enterprise
+- **Customer-managed keys (CMEK)**: Business Critical only
 
 ---
 

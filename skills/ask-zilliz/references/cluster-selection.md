@@ -68,7 +68,7 @@ Start Here
 | Multiple AZs | ✗ | ✗ | ✓ | ✓ | ✓ | ✓ |
 | Replica Support | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Snapshots | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Global Cluster | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Global Cluster | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ |
 | Uptime SLA | 99.95% | 99.99%* | 99.95% | Standard terms | Standard terms | Per agreement |
 
 *Multi-replica
@@ -84,7 +84,7 @@ Start Here
 | Audit Logs | ✗ | ✗ | ✓ | ✓ | ✓ | ✓ |
 | IP Whitelist | ✗ | ✗ | ✓ | ✓ | ✓ | ✓ |
 | Enterprise SSO | ✗ | ✗ | ✗ | ✓ | ✓ | ✓ |
-| CMEK | ✗ | ✗ | ✗ | ✓ | ✓ | ✓ |
+| CMEK | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ |
 | Private Link | ✗ | ✗ | ✗ | ✓ | ✓ | ✓ |
 | HIPAA Ready | ✗ | ✗ | ✗ | ✓ | ✓ | ✓ |
 
