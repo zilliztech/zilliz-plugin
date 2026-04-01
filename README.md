@@ -12,6 +12,8 @@ Instead of memorizing CLI commands or switching to the web console, just describ
 - "Set up a daily backup policy for my production cluster with 7-day retention"
 - "Create a role with read-only access to the analytics collection"
 - "Import data from S3 into my embeddings collection"
+- "Check the status of my import job"
+- "Show me this month's usage and invoices"
 
 ## Installation
 
@@ -48,6 +50,25 @@ This guides you through installing the CLI, logging in, and connecting to a clus
 | `/zilliz:quickstart` | Install CLI, authenticate, and set up cluster context |
 | `/zilliz:status` | Show cluster status, collections, and statistics |
 
+## Skills
+
+| Skill | Description |
+|-------|-------------|
+| `zilliz:setup` | Install zilliz-cli, log in, configure credentials, set active cluster context |
+| `zilliz:cluster` | Create, list, describe, delete, suspend, resume, or modify clusters |
+| `zilliz:database` | Create, list, describe, or drop databases |
+| `zilliz:collection` | Create, list, describe, drop, rename, load, release, or manage collections and aliases |
+| `zilliz:index` | Create, list, describe, or drop indexes |
+| `zilliz:partition` | Create, list, load, release, or drop partitions |
+| `zilliz:vector` | Search, query, insert, upsert, get, or delete vectors |
+| `zilliz:import` | Bulk data import from cloud storage |
+| `zilliz:backup` | Create, list, describe, delete, export, restore backups, or manage backup policies |
+| `zilliz:job` | Track async Cloud Job status (backup, restore, migration, import, clone) |
+| `zilliz:user-role` | Manage database users, roles, passwords, and access privileges |
+| `zilliz:monitoring` | Check cluster status, collection statistics, and load states |
+| `zilliz:billing` | Check usage, view invoices, or manage payment methods |
+| `zilliz:project-region` | Manage projects and storage volumes |
+
 ## Capabilities
 
 | Area | What You Can Do |
@@ -60,8 +81,10 @@ This guides you through installing the CLI, logging in, and connecting to a clus
 | **Users & Roles** | RBAC setup, privilege management |
 | **Backups** | Create, restore, export, policy management |
 | **Import** | Bulk data import from cloud storage |
+| **Jobs** | Track async operations (backup, restore, migration, import, clone) |
 | **Partitions** | Create, load, release, manage |
-| **Monitoring** | Cluster status, collection stats |
+| **Monitoring** | Cluster status, collection stats, load states |
+| **Billing** | Usage, invoices, payment methods |
 | **Projects** | Project and region management |
 
 ## Requirements
