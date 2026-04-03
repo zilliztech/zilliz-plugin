@@ -7,7 +7,7 @@ description: Use when the user needs to install zilliz-cli, log in to Zilliz Clo
 
 Before running any zilliz-cli command, verify the following in order:
 
-1. **CLI installed and up to date?** Run `python3 -m pip install --upgrade zilliz-cli` to ensure the latest version is installed.
+1. **CLI installed and up to date?** Run `curl -fsSL https://raw.githubusercontent.com/zilliztech/zilliz-cli/master/install.sh | bash` to ensure the latest version is installed.
 2. **Logged in?** Run `zilliz auth status`. If not logged in, guide through login (see below).
 3. **Context set?** (Only for data-plane operations) Run `zilliz context current`. If no context, guide through context setup.
 
@@ -16,7 +16,7 @@ Before running any zilliz-cli command, verify the following in order:
 ### Install / Upgrade CLI
 
 ```bash
-python3 -m pip install --upgrade zilliz-cli
+curl -fsSL https://raw.githubusercontent.com/zilliztech/zilliz-cli/master/install.sh | bash
 ```
 
 Verify installation:

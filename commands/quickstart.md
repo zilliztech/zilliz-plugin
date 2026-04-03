@@ -14,13 +14,13 @@ Run `python3 --version` to verify Python 3.10+ is available.
 Check if already installed:
 
 ```bash
-python3 -m pip show zilliz-cli
+zilliz --version
 ```
 
 If not installed or needs upgrading:
 
 ```bash
-python3 -m pip install --upgrade zilliz-cli
+curl -fsSL https://raw.githubusercontent.com/zilliztech/zilliz-cli/master/install.sh | bash
 ```
 
 Verify:
