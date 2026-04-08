@@ -14,7 +14,7 @@ description: Use when the user wants to manage Zilliz Cloud projects or storage 
 #### Create a Project
 
 ```bash
-zilliz project create --name <project-name> --plan <Free|Serverless|Standard|Enterprise>
+zilliz project create --name <project-name> --plan <Standard|Enterprise|BusinessCritical>
 ```
 
 #### List Projects
@@ -32,8 +32,7 @@ zilliz project describe --project-id <project-id>
 #### Upgrade a Project
 
 ```bash
-zilliz project upgrade --project-id <project-id>
-# Optional: --plan <Serverless|Standard|Enterprise>
+zilliz project upgrade --project-id <project-id> --plan <Standard|Enterprise|BusinessCritical>
 ```
 
 ### Volumes

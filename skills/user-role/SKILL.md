@@ -17,11 +17,15 @@ description: Use when the user wants to manage database users, roles, passwords,
 zilliz user create --user <username> --password <password>
 ```
 
+*Create a new database user.*
+
 #### List Users
 
 ```bash
 zilliz user list
 ```
+
+*List all database users.*
 
 #### Describe a User
 
@@ -29,11 +33,15 @@ zilliz user list
 zilliz user describe --user <username>
 ```
 
+*Get details of a user.*
+
 #### Drop a User
 
 ```bash
 zilliz user drop --user <username-to-drop>
 ```
+
+*Drop a database user.*
 
 #### Update Password
 
@@ -44,17 +52,23 @@ zilliz user update-password \
   --new-password <new-password>
 ```
 
+*Update user password.*
+
 #### Grant a Role to a User
 
 ```bash
 zilliz user grant-role --user <username> --role <role-name-to-grant>
 ```
 
+*Grant a role to a user.*
+
 #### Revoke a Role from a User
 
 ```bash
 zilliz user revoke-role --user <username> --role <role-name-to-revoke>
 ```
+
+*Revoke a role from a user.*
 
 ### Roles
 
@@ -64,11 +78,15 @@ zilliz user revoke-role --user <username> --role <role-name-to-revoke>
 zilliz role create --role <role-name>
 ```
 
+*Create a new role.*
+
 #### List Roles
 
 ```bash
 zilliz role list
 ```
+
+*List all roles.*
 
 #### Describe a Role
 
@@ -76,11 +94,15 @@ zilliz role list
 zilliz role describe --role <role-name>
 ```
 
+*Get details and privileges of a role.*
+
 #### Drop a Role
 
 ```bash
 zilliz role drop --role <role-name-to-drop>
 ```
+
+*Drop a role.*
 
 #### Grant a Privilege
 
@@ -93,6 +115,8 @@ zilliz role grant-privilege \
 # Optional: --database <database-name>
 ```
 
+*Grant a privilege to a role.*
+
 #### Revoke a Privilege
 
 ```bash
@@ -103,6 +127,8 @@ zilliz role revoke-privilege \
   --privilege <privilege-name>
 # Optional: --database <database-name>
 ```
+
+*Revoke a privilege from a role.*
 
 ## Common Privileges
 

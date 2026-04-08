@@ -156,7 +156,7 @@ When a command fails with a permissions error, check the cluster type first — 
 
 ## Troubleshooting
 
-- **"command not found" after install:** Check that the Python scripts directory is in your PATH. Try running `python3 -m zilliz` as an alternative.
+- **"command not found" after install:** Check that the install directory (e.g., `~/.local/bin`) is in your PATH. Try re-running the install script: `curl -fsSL https://raw.githubusercontent.com/zilliztech/zilliz-cli/master/install.sh | bash`.
 - **"not authenticated" errors:** Run `zilliz auth status` to check login state. Tokens may have expired — re-run login in your own terminal.
 - **Context errors (no cluster set):** Run `zilliz context current` to verify. If the cluster was deleted or suspended, set a new context with `zilliz context set --cluster-id <id>`.
 - **Permission or "not supported" errors:** Check the cluster type — some operations are only available on Dedicated clusters (see Cluster Type Differences table above).

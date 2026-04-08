@@ -5,11 +5,7 @@ description: Set up Zilliz Cloud CLI — install, authenticate, and configure yo
 
 Guide the user through the complete Zilliz Cloud CLI setup. Follow these steps in order:
 
-## Step 1: Check Python Environment
-
-Run `python3 --version` to verify Python 3.10+ is available.
-
-## Step 2: Install zilliz-cli
+## Step 1: Install zilliz-cli
 
 Check if already installed:
 
@@ -29,7 +25,7 @@ Verify:
 zilliz --version
 ```
 
-## Step 3: Authenticate
+## Step 2: Authenticate
 
 Check if already logged in:
 
@@ -52,7 +48,7 @@ Wait for the user to confirm login is complete, then verify:
 zilliz auth status
 ```
 
-## Step 4: Select a Cluster
+## Step 3: Select a Cluster
 
 List available clusters:
 
@@ -68,7 +64,7 @@ zilliz cluster regions
 zilliz cluster create --type serverless --name <name> --project-id <id> --region <region>
 ```
 
-## Step 5: Set Cluster Context
+## Step 4: Set Cluster Context
 
 Set the active cluster for data operations:
 
@@ -76,7 +72,7 @@ Set the active cluster for data operations:
 zilliz context set --cluster-id <selected-cluster-id>
 ```
 
-## Step 6: Verify
+## Step 5: Verify
 
 Confirm everything works:
 

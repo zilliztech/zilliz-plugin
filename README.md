@@ -89,7 +89,6 @@ This guides you through installing the CLI, logging in, and connecting to a clus
 
 ## Requirements
 
-- Python 3.10+
 - A [Zilliz Cloud](https://cloud.zilliz.com/) account (or local Milvus instance)
 
 ## License
