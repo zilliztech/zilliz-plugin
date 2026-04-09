@@ -48,18 +48,10 @@ zilliz billing invoices --page-size 10 --page 1
 zilliz billing invoices --invoice-id inv-xxxxxxxxxxxx
 ```
 
-### Bind a Credit Card
 
-```bash
-zilliz billing bind-card \
-  --card-number <credit-card-number> \
-  --exp-month <expiration-month> \
-  --exp-year <expiration-year> \
-  --cvc <card-verification-code>
-```
 
 ## Guidance
 
 - Billing commands require OAuth login, not API Key authentication.
 - When the user asks about costs or spending, use `billing usage` with an appropriate time range.
-- The `bind-card` command handles sensitive card data -- always instruct the user to run it in their own terminal, never inside Claude Code.
+- To bind a credit card, direct the user to the Zilliz Cloud web console -- card binding is not available via CLI for security reasons.
