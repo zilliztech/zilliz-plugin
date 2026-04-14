@@ -50,6 +50,20 @@ zilliz database list
 zilliz cluster list --all
 ```
 
+### Time-series Metrics
+
+For cluster-wide time series (CU sizing, storage, serverless VCU, slow queries) use `zilliz cluster metrics`:
+
+```bash
+zilliz cluster metrics --cluster-id <cluster-id> -m CU_COMPUTATION --period 1h
+```
+
+For per-collection time series (QPS, latency, entity counts, hybrid-search aliases) use `zilliz collection metrics` -- see the collection skill for metric scope rules and the full alias list:
+
+```bash
+zilliz collection metrics -c <collection-name> -m SEARCH_QPS --period 1h
+```
+
 ## Presenting Results
 
 When the user asks for a status overview, collect and present information as a summary table:

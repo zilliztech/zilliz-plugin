@@ -57,7 +57,7 @@ This guides you through installing the CLI, logging in, and connecting to a clus
 | `zilliz:setup` | Install zilliz-cli, log in, configure credentials, set active cluster context |
 | `zilliz:cluster` | Create, list, describe, delete, suspend, resume, or modify clusters |
 | `zilliz:database` | Create, list, describe, or drop databases |
-| `zilliz:collection` | Create, list, describe, drop, rename, load, release, or manage collections and aliases |
+| `zilliz:collection` | Create, list, describe, drop, rename, load, release, manage aliases, and query per-collection metrics |
 | `zilliz:index` | Create, list, describe, or drop indexes |
 | `zilliz:partition` | Create, list, load, release, or drop partitions |
 | `zilliz:vector` | Search, query, insert, upsert, get, or delete vectors |
@@ -83,7 +83,7 @@ This guides you through installing the CLI, logging in, and connecting to a clus
 | **Import** | Bulk data import from cloud storage |
 | **Jobs** | Track async operations (backup, restore, migration, import, clone) |
 | **Partitions** | Create, load, release, manage |
-| **Monitoring** | Cluster status, collection stats, load states |
+| **Monitoring** | Cluster status, collection stats, load states, cluster and per-collection time-series metrics |
 | **Billing** | Usage, invoices, payment methods |
 | **Projects** | Project and region management |
 

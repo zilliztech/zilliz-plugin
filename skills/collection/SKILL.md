@@ -11,6 +11,57 @@ description: Use when the user wants to create, list, describe, drop, rename, lo
 
 All collection commands accept an optional `--database <db-name>` flag to target a non-default database. If omitted, the database from the current context is used.
 
+## Collection metrics
+
+Query per-collection metrics against `POST /v2/clusters/{clusterId}/metrics/query` with `collectionName` set in the request body. Mirrors the web console's Collection Detail > Metrics page.
+
+```bash
+zilliz collection metrics --collection-name <collection-name> --metric <metric-name>
+# Optional:
+#   --cluster-id <cluster-id>         Override cluster context
+#   --period <duration>               e.g. 1h, 24h, 7d (mutually exclusive with --start/--end)
+#   --start <iso-8601> --end <iso-8601>
+#   --granularity <duration> / -g     e.g. 30s, 5m, 1h (auto-selected if omitted)
+```
+
+Examples:
+
+```bash
+# Period shorthand: last hour of SEARCH_QPS for a collection
+zilliz collection metrics -c my_coll -m SEARCH_QPS --period 1h
+
+# Explicit range with 1h granularity
+zilliz collection metrics -c my_coll -m ENTITIES_LOADED \
+  --start 2026-04-13T00:00:00Z --end 2026-04-14T00:00:00Z -g 1h
+
+# Multiple metrics in a single call
+zilliz collection metrics -c my_coll -m SEARCH_QPS -m SEARCH_LATENCY_P99 --period 6h
+```
+
+### Metric scope
+
+Each metric is tagged with a scope. `zilliz collection metrics` only accepts metrics whose scope is `Collection` or `Both`. Using a Cluster-only metric emits:
+
+```
+Metric '<NAME>' is cluster-scope only and cannot be used with --collection-name.
+```
+
+| Scope | Metrics |
+|-------|---------|
+| Cluster only (rejected here) | `CU_COMPUTATION`, `CU_CAPACITY`, `CU_SIZE`, `REPLICA_COUNT`, `STORAGE`, `COLLECTIONS`, `SLOW_QUERIES`, `READ_VCU`, `WRITE_VCU` |
+| Collection / Both (allowed) | `SEARCH_QPS`, `QUERY_QPS`, `INSERT_QPS`, `UPSERT_QPS`, `DELETE_QPS`, `BULK_INSERT_QPS`, `SEARCH_LATENCY_AVG/P99`, `QUERY_LATENCY_AVG/P99`, `INSERT_LATENCY_AVG/P99`, `UPSERT_LATENCY_AVG/P99`, `DELETE_LATENCY_AVG/P99`, VPS counters, failure-rate counters, `ENTITIES`, `ENTITIES_LOADED`, `ENTITIES_INDEXED`, plus the hybrid-search aliases below |
+
+### Hybrid-search aliases
+
+| CLI name | Backend name |
+|----------|--------------|
+| `HYBRID_SEARCH_QPS` | `REQ_HYBRID_SEARCH_COUNT` |
+| `HYBRID_SEARCH_LATENCY_AVG` | `REQ_HYBRID_SEARCH_LATENCY_AVG` |
+| `HYBRID_SEARCH_LATENCY_P99` | `REQ_HYBRID_SEARCH_LATENCY_P99` |
+| `HYBRID_SEARCH_FAIL_RATE` | `REQ_FAIL_RATE_HYBRID_SEARCH` |
+
+For cluster-wide metrics (CU sizing, storage, serverless VCU, slow queries) use `zilliz cluster metrics` instead -- see the monitoring skill.
+
 ### Create a Collection
 
 ```bash
