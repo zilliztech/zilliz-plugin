@@ -34,6 +34,8 @@ zilliz import status --job-id <import-job-id> --cluster-id <cluster-id>
 
 Import requires a cloud storage integration to access data files. The `integration-id` is configured in the Zilliz Cloud console under **Project Settings > Integrations**. Ensure the integration has read access to the source bucket and path.
 
+For data staged in Zilliz-managed storage, see the `project-region` skill's volume section to provision a volume first, then upload files via SDK before starting the import.
+
 Supported file formats: Parquet, JSON, CSV.
 
 ## Guidance
