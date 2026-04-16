@@ -1,57 +1,33 @@
 ---
 name: job
-description: Use when the user wants to check the status of an async Cloud Job (backup, restore, migration, import, or clone). Also use when the user wants to wait for a long-running operation to complete.
+description: Use when the user wants to describe job resources.
 ---
+# job
+
+_Section: Cloud Management_ — Query status of async Cloud Jobs.
 
 ## Prerequisites
 
-1. CLI installed and logged in (see setup skill).
-2. A job ID from a previous async operation (backup create, import start, etc.).
+- `zilliz` CLI installed (see `/zilliz:setup`).
+- Authenticated (`zilliz login`) and context set (`zilliz context set`).
 
 ## Commands Reference
 
-### Describe a Job
+### Describe — Get status of an async job (backup, restore, migration, import, etc.).
 
 ```bash
 zilliz job describe --job-id <job-id>
+#   [--api-key <api-key>]
 ```
 
-## Wait for Completion
+**Flags:**
+- `--job-id` (**required**, `string`) — job ID (e.g. job-xxxxxxxxxxxxxxxxxxxx)
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
 
-The `job describe` command supports a `--wait` flag to poll until the job finishes:
+## Live help
 
 ```bash
-# Poll until done (default: 5s interval, 30min timeout)
-zilliz job describe --job-id <job-id> --wait
-
-# Custom timeout and interval
-zilliz job describe --job-id <job-id> --wait --timeout 600 --interval 10
+zilliz job --help
 ```
 
-## Job Types
-
-| Type             | Triggered By                                          |
-| ---------------- | ----------------------------------------------------- |
-| BACKUP           | `backup create`                                       |
-| RESTORE          | `backup restore-cluster`, `backup restore-collection` |
-| IMPORT           | `import start`                                        |
-| MIGRATION        | Cloud migration operations                            |
-| CLONE_COLLECTION | Collection clone operations                           |
-
-## Job Statuses
-
-| Status      | Meaning                           |
-| ----------- | --------------------------------- |
-| PENDING     | Job is queued                     |
-| IN_PROGRESS | Job is running                    |
-| SUCCESSFUL  | Job completed successfully        |
-| FAILED      | Job failed (check `reason` field) |
-| CANCELING   | Job is being cancelled            |
-| CANCELED    | Job was cancelled                 |
-
-## Guidance
-
-- Many control-plane operations are **asynchronous** and return a `jobId`. Suggest using `job describe` to track progress.
-- When a job fails, the `reason` field contains the error message. Display it to the user.
-- For long-running operations (cluster creation, data migration), suggest using `--wait` so the user doesn't have to poll manually.
-- The `--wait` flag shows a live progress spinner. Users can press Ctrl+C to stop waiting without cancelling the job itself.
+Destructive operations (`delete`, `drop`, `restore`) require explicit user confirmation before execution.

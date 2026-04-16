@@ -8,8 +8,8 @@
   "plugins": [
     {
       "name": "zilliz",
-      "description": "Manage Zilliz Cloud clusters and Milvus vector databases from Claude Code",
-      "version": "0.3.0",
+      "description": "Manage Zilliz Cloud clusters and Milvus vector databases from Claude Code using the zilliz-cli.",
+      "version": "1.1.0",
       "source": "./"
     }
   ]

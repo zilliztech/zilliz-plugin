@@ -1,49 +1,65 @@
 ---
 name: database
-description: Use when the user wants to create, list, describe, or drop databases in Milvus.
+description: Use when the user wants to create, list, describe, or drop database resources.
 ---
+# database
+
+_Section: Data Operations_ — Create and manage databases.
 
 ## Prerequisites
 
-1. CLI installed, logged in, and cluster context set (see setup skill).
+- `zilliz` CLI installed (see `/zilliz:setup`).
+- Authenticated (`zilliz login`) and context set (`zilliz context set`).
 
 ## Commands Reference
 
-### Create a Database
+### Create — Create a new database. (Dedicated only)
 
 ```bash
-zilliz database create --name <database-name>
-# Or use raw JSON: --body '{"properties": {}}'
+zilliz database create --name <name>
+#   [--api-key <api-key>]
 ```
 
-*Create a new database. (Dedicated only)*
+**Flags:**
+- `--name` (**required**, `string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
 
-### List Databases
+### List — List all databases.
 
 ```bash
 zilliz database list
+#   [--api-key <api-key>]
 ```
 
-### Describe a Database
+**Flags:**
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Describe — Get details of a database. (Dedicated only)
 
 ```bash
-zilliz database describe --name <database-name>
+zilliz database describe --name <name>
+#   [--api-key <api-key>]
 ```
 
-*Get details of a database. (Dedicated only)*
+**Flags:**
+- `--name` (**required**, `string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
 
-### Drop a Database
+### Drop — Drop a database. (Dedicated only)
 
 ```bash
-zilliz database drop --name <database-name-to-drop>
+zilliz database drop --name <name>
+#   [--api-key <api-key>]
 ```
 
-*Drop a database. (Dedicated only)*
+**Flags:**
+- `--name` (**required**, `string`) — database name to drop
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
 
-## Guidance
+## Live help
 
-- Database create, describe, and drop operations are only available on **Dedicated** clusters. `database list` works on all cluster types.
-- Every cluster has a "default" database.
-- Before dropping a database, confirm with the user -- all collections in it will be deleted.
-- After creating a database, suggest switching context: `zilliz context set --database <db-name>`.
-- To work with collections in a non-default database, use `--database` flag on collection commands or switch context.
+```bash
+zilliz database --help
+```
+
+Destructive operations (`delete`, `drop`, `restore`) require explicit user confirmation before execution.

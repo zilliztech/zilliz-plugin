@@ -1,199 +1,204 @@
 ---
 name: collection
-description: Use when the user wants to create, list, describe, drop, rename, load, release, or manage collections and collection aliases in Milvus.
+description: Use when the user wants to metrics, create, list, describe, drop,
+  rename, load, release, get load state, get stats, has, flush, or compact
+  collection resources.
 ---
+# collection
+
+_Section: Data Operations_ — Create and manage vector collections.
 
 ## Prerequisites
 
-1. CLI installed, logged in, and cluster context set (see setup skill).
+- `zilliz` CLI installed (see `/zilliz:setup`).
+- Authenticated (`zilliz login`) and context set (`zilliz context set`).
 
 ## Commands Reference
 
-All collection commands accept an optional `--database <db-name>` flag to target a non-default database. If omitted, the database from the current context is used.
-
-## Collection metrics
-
-Query per-collection metrics against `POST /v2/clusters/{clusterId}/metrics/query` with `collectionName` set in the request body. Mirrors the web console's Collection Detail > Metrics page.
+### Metrics — Show collection metrics.
 
 ```bash
-zilliz collection metrics --collection-name <collection-name> --metric <metric-name>
-# Optional:
-#   --cluster-id <cluster-id>         Override cluster context
-#   --period <duration>               e.g. 1h, 24h, 7d (mutually exclusive with --start/--end)
-#   --start <iso-8601> --end <iso-8601>
-#   --granularity <duration> / -g     e.g. 30s, 5m, 1h (auto-selected if omitted)
+zilliz collection metrics
+#   [--cluster-id <cluster-id>]
 ```
 
-Examples:
+**Flags:**
+- `--cluster-id` (`string`) — Cluster ID (overrides context if provided)
+
+### Create — Create a new collection.
 
 ```bash
-# Period shorthand: last hour of SEARCH_QPS for a collection
-zilliz collection metrics -c my_coll -m SEARCH_QPS --period 1h
-
-# Explicit range with 1h granularity
-zilliz collection metrics -c my_coll -m ENTITIES_LOADED \
-  --start 2026-04-13T00:00:00Z --end 2026-04-14T00:00:00Z -g 1h
-
-# Multiple metrics in a single call
-zilliz collection metrics -c my_coll -m SEARCH_QPS -m SEARCH_LATENCY_P99 --period 6h
+zilliz collection create --name <name>
+#   [--dimension <dimension>]
+#   [--metric-type <metric-type>  # default: "COSINE"]
+#   [--id-type <id-type>]
+#   [--auto-id <auto-id>]
+#   [--primary-field <primary-field>]
+#   [--vector-field <vector-field>]
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Metric scope
+**Flags:**
+- `--name` (**required**, `string`) — collection name
+- `--dimension` (`integer`) — vector dimension
+- `--metric-type` (`string`, default `"COSINE"`) — [COSINE, L2, IP]distance metric
+- `--id-type` (`string`) — [Int64, VarChar]     primary key type
+- `--auto-id` (`boolean`) — auto-generate primary key
+- `--primary-field` (`string`) — primary key field name
+- `--vector-field` (`string`) — vector field name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
 
-Each metric is tagged with a scope. `zilliz collection metrics` only accepts metrics whose scope is `Collection` or `Both`. Using a Cluster-only metric emits:
-
-```
-Metric '<NAME>' is cluster-scope only and cannot be used with --collection-name.
-```
-
-| Scope | Metrics |
-|-------|---------|
-| Cluster only (rejected here) | `CU_COMPUTATION`, `CU_CAPACITY`, `CU_SIZE`, `REPLICA_COUNT`, `STORAGE`, `COLLECTIONS`, `SLOW_QUERIES`, `READ_VCU`, `WRITE_VCU` |
-| Collection / Both (allowed) | `SEARCH_QPS`, `QUERY_QPS`, `INSERT_QPS`, `UPSERT_QPS`, `DELETE_QPS`, `BULK_INSERT_QPS`, `SEARCH_LATENCY_AVG/P99`, `QUERY_LATENCY_AVG/P99`, `INSERT_LATENCY_AVG/P99`, `UPSERT_LATENCY_AVG/P99`, `DELETE_LATENCY_AVG/P99`, VPS counters, failure-rate counters, `ENTITIES`, `ENTITIES_LOADED`, `ENTITIES_INDEXED`, plus the hybrid-search aliases below |
-
-### Hybrid-search aliases
-
-| CLI name | Backend name |
-|----------|--------------|
-| `HYBRID_SEARCH_QPS` | `REQ_HYBRID_SEARCH_COUNT` |
-| `HYBRID_SEARCH_LATENCY_AVG` | `REQ_HYBRID_SEARCH_LATENCY_AVG` |
-| `HYBRID_SEARCH_LATENCY_P99` | `REQ_HYBRID_SEARCH_LATENCY_P99` |
-| `HYBRID_SEARCH_FAIL_RATE` | `REQ_FAIL_RATE_HYBRID_SEARCH` |
-
-For cluster-wide metrics (CU sizing, storage, serverless VCU, slow queries) use `zilliz cluster metrics` instead -- see the monitoring skill.
-
-### Create a Collection
-
-```bash
-zilliz collection create --name <collection-name> --dimension <vector-dimension>
-# Optional:
-#   --metric-type <COSINE|L2|IP>
-#   --id-type <Int64|VarChar>
-#   --auto-id <true|false>
-#   --primary-field <primary-key-field-name>
-#   --vector-field <vector-field-name>
-#   --database <database-name>
-# Or use raw JSON: --body '{"schema": {"fields": [{"fieldName": "id", "dataType": "Int64", "isPrimary": true}, {"fieldName": "vector", "dataType": "FloatVector", "elementTypeParams": {"dim": "768"}}]}}'
-```
-
-### List Collections
+### List — List all collections.
 
 ```bash
 zilliz collection list
-# Optional: --database <database-name>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Describe a Collection
+**Flags:**
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Describe — Get details of a collection.
 
 ```bash
-zilliz collection describe --name <collection-name>
-# Optional: --database <database-name>
+zilliz collection describe --name <name>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Drop a Collection
+**Flags:**
+- `--name` (**required**, `string`) — collection name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Drop — Drop a collection. This action is irreversible.
 
 ```bash
-zilliz collection drop --name <collection-name-to-drop>
-# Optional: --database <database-name>
+zilliz collection drop --name <name>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Rename a Collection
+**Flags:**
+- `--name` (**required**, `string`) — collection name to drop
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Rename — Rename a collection.
 
 ```bash
-zilliz collection rename --name <current-collection-name> --new-name <new-collection-name>
-# Optional: --database <current-database-name>, --new-database <target-database-name>
+zilliz collection rename --name <name> --new-name <new-name>
+#   [--database <database>]
+#   [--new-database <new-database>]
+#   [--api-key <api-key>]
 ```
 
-### Load a Collection
+**Flags:**
+- `--name` (**required**, `string`) — current collection name
+- `--new-name` (**required**, `string`) — new collection name
+- `--database` (`string`) — current database name
+- `--new-database` (`string`) — target database name (for cross-db rename)
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Load — Load a collection into memory for search.
 
 ```bash
-zilliz collection load --name <collection-name>
-# Optional: --database <database-name>
+zilliz collection load --name <name>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Release a Collection
+**Flags:**
+- `--name` (**required**, `string`) — collection name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Release — Release a collection from memory.
 
 ```bash
-zilliz collection release --name <collection-name>
-# Optional: --database <database-name>
+zilliz collection release --name <name>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Get Load State
+**Flags:**
+- `--name` (**required**, `string`) — collection name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Get Load State — Get collection load state.
 
 ```bash
-zilliz collection get-load-state --name <collection-name>
-# Optional: --database <database-name>
+zilliz collection get-load-state --name <name>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Get Statistics
+**Flags:**
+- `--name` (**required**, `string`) — collection name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Get Stats — Get collection statistics (row count, etc.).
 
 ```bash
-zilliz collection get-stats --name <collection-name>
-# Optional: --database <database-name>
+zilliz collection get-stats --name <name>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Check if a Collection Exists
+**Flags:**
+- `--name` (**required**, `string`) — collection name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Has — Check if a collection exists.
 
 ```bash
-zilliz collection has --name <collection-name>
-# Optional: --database <database-name>
+zilliz collection has --name <name>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Flush a Collection
+**Flags:**
+- `--name` (**required**, `string`) — collection name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Flush — Flush collection data to disk.
 
 ```bash
-zilliz collection flush --name <collection-name>
-# Optional: --database <database-name>
+zilliz collection flush --name <name>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Compact a Collection
+**Flags:**
+- `--name` (**required**, `string`) — collection name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Compact — Compact collection segments to optimize storage.
 
 ```bash
-zilliz collection compact --name <collection-name>
-# Optional: --database <database-name>
+zilliz collection compact --name <name>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Collection Aliases
+**Flags:**
+- `--name` (**required**, `string`) — collection name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
 
-#### Create an Alias
+## Live help
 
 ```bash
-zilliz alias create --collection <target-collection-name> --alias <alias-name>
-# Optional: --database <database-name>
+zilliz collection --help
 ```
 
-#### List Aliases
-
-```bash
-zilliz alias list --database <database-name>
-# Optional: --collection <filter-by-collection-name>
-```
-
-#### Describe an Alias
-
-```bash
-zilliz alias describe --alias <alias-name>
-# Optional: --database <database-name>
-```
-
-#### Alter an Alias
-
-```bash
-zilliz alias alter --collection <new-target-collection> --alias <alias-name-to-reassign>
-# Optional: --database <database-name>
-```
-
-#### Drop an Alias
-
-```bash
-zilliz alias drop --alias <alias-name-to-drop>
-# Optional: --database <database-name>
-```
-
-## Guidance
-
-- When the user wants to create a collection, ask about their use case to recommend appropriate dimension, metric type, and schema.
-- Before dropping a collection, always confirm with the user -- this deletes all data.
-- A collection must be loaded before it can be searched or queried.
-- After creating a collection, suggest loading it if the user plans to query immediately.
-- Use `describe` to inspect schema before performing vector operations.
+Destructive operations (`delete`, `drop`, `restore`) require explicit user confirmation before execution.

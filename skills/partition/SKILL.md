@@ -1,71 +1,120 @@
 ---
 name: partition
-description: Use when the user wants to create, list, load, release, or drop partitions in a Milvus collection.
+description: Use when the user wants to create, list, drop, has, get stats,
+  load, or release partition resources.
 ---
+# partition
+
+_Section: Data Operations_ — Create and manage collection partitions.
 
 ## Prerequisites
 
-1. CLI installed, logged in, and cluster context set (see setup skill).
-2. Target collection must exist (see collection skill).
+- `zilliz` CLI installed (see `/zilliz:setup`).
+- Authenticated (`zilliz login`) and context set (`zilliz context set`).
 
 ## Commands Reference
 
-All partition commands accept an optional `--database <db-name>` flag. If omitted, the database from the current context is used.
-
-### Create a Partition
+### Create — Create a partition in a collection.
 
 ```bash
-zilliz partition create --collection <collection-name> --partition <partition-name>
-# Optional: --database <database-name>
+zilliz partition create --collection <collection> --partition <partition>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### List Partitions
+**Flags:**
+- `--collection` (**required**, `string`) — collection name
+- `--partition` (**required**, `string`) — partition name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### List — List partitions in a collection.
 
 ```bash
-zilliz partition list --collection <collection-name>
-# Optional: --database <database-name>
+zilliz partition list --collection <collection>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Drop a Partition
+**Flags:**
+- `--collection` (**required**, `string`) — collection name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Drop — Drop a partition.
 
 ```bash
-zilliz partition drop --collection <collection-name> --partition <partition-name-to-drop>
-# Optional: --database <database-name>
+zilliz partition drop --collection <collection> --partition <partition>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Check if a Partition Exists
+**Flags:**
+- `--collection` (**required**, `string`) — collection name
+- `--partition` (**required**, `string`) — partition name to drop
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Has — Check if a partition exists.
 
 ```bash
-zilliz partition has --collection <collection-name> --partition <partition-name>
-# Optional: --database <database-name>
+zilliz partition has --collection <collection> --partition <partition>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Get Statistics
+**Flags:**
+- `--collection` (**required**, `string`) — collection name
+- `--partition` (**required**, `string`) — partition name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Get Stats — Get partition statistics.
 
 ```bash
-zilliz partition get-stats --collection <collection-name> --partition <partition-name>
-# Optional: --database <database-name>
+zilliz partition get-stats --collection <collection> --partition <partition>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Load a Partition
+**Flags:**
+- `--collection` (**required**, `string`) — collection name
+- `--partition` (**required**, `string`) — partition name
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Load — Load partitions into memory.
 
 ```bash
-zilliz partition load --collection <collection-name> --names '["partition1", "partition2"]'
-# Optional: --database <database-name>
+zilliz partition load --collection <collection> --names <names-json-array>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-### Release a Partition
+**Flags:**
+- `--collection` (**required**, `string`) — collection name
+- `--names` (**required**, `array`) — partition names as JSON array
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Release — Release partitions from memory.
 
 ```bash
-zilliz partition release --collection <collection-name> --names '["partition1", "partition2"]'
-# Optional: --database <database-name>
+zilliz partition release --collection <collection> --names <names-json-array>
+#   [--database <database>]
+#   [--api-key <api-key>]
 ```
 
-## Guidance
+**Flags:**
+- `--collection` (**required**, `string`) — collection name
+- `--names` (**required**, `array`) — partition names as JSON array
+- `--database` (`string`) — database name
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
 
-- Every collection has a default `_default` partition.
-- Partitions allow organizing data for more targeted searches.
-- A partition must be loaded before it can be searched.
-- Before dropping a partition, confirm with the user -- all data in it will be deleted.
-- Use partition stats to check row counts per partition.
-- For filter expression syntax used in vector operations on partitions, see the vector skill.
+## Live help
+
+```bash
+zilliz partition --help
+```
+
+Destructive operations (`delete`, `drop`, `restore`) require explicit user confirmation before execution.

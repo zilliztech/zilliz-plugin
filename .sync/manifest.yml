@@ -1,0 +1,12 @@
+lastSyncedTag: zilliz-v1.1.0
+lastSyncedAt: 2026-04-16T04:02:44.370Z
+generated:
+  - .claude-plugin/plugin.json
+  - marketplace.json
+  - skills/*/SKILL.md
+preserved:
+  - .sync/**
+  - LICENSE
+  - README.md
+  - commands/*.md
+  - docs/**

@@ -1,111 +1,160 @@
 ---
 name: backup
-description: Use when the user wants to create, list, describe, delete, export, or restore backups, or manage backup policies on Zilliz Cloud.
+description: Use when the user wants to create, list, describe, delete, export,
+  restore cluster, restore collection, describe policy, or update policy backup
+  resources.
 ---
+# backup
+
+_Section: Cloud Management_ — Create, restore, and manage backups.
 
 ## Prerequisites
 
-1. CLI installed and logged in (see setup skill).
-2. No cluster context required -- backup operations use `--cluster-id` directly.
+- `zilliz` CLI installed (see `/zilliz:setup`).
+- Authenticated (`zilliz login`) and context set (`zilliz context set`).
 
 ## Commands Reference
 
-### Create a Backup
+### Create — Create a backup for a cluster.
 
 ```bash
 zilliz backup create --cluster-id <cluster-id>
-# Optional:
-#   --database <database-name>
-#   --collection <collection-name>
-#   --backup-type <CLUSTER|COLLECTION>
-# Or use raw JSON: --body '{...}'
+#   [--database <database>]
+#   [--collection <collection>]
+#   [--backup-type <backup-type>]
+#   [--api-key <api-key>]
 ```
 
-### List Backups
+**Flags:**
+- `--cluster-id` (**required**, `string`) — cluster ID
+- `--database` (`string`) — database name (for collection-level backup)
+- `--collection` (`string`) — collection name (omit for full cluster backup)
+- `--backup-type` (`string`) — [CLUSTER, COLLECTION]backup type (default: CLUSTER, auto-set to COLLECTION when --collection is given)
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### List — List all backups.
 
 ```bash
 zilliz backup list
-# Optional:
-#   --project-id <filter-by-project-id>
-#   --cluster-id <filter-by-cluster-id>
-#   --creation-method <MANUAL|AUTO>
-#   --backup-type <CLUSTER|COLLECTION>
-# Pagination: --page-size <n> --page <n>
-# Fetch all pages: --all
+#   [--project-id <project-id>]
+#   [--cluster-id <cluster-id>]
+#   [--creation-method <creation-method>]
+#   [--backup-type <backup-type>]
+#   [--page-size <page-size>]
+#   [--page <page>]
+#   [--api-key <api-key>]
 ```
 
-### Describe a Backup
+**Flags:**
+- `--project-id` (`string`) — filter by project ID
+- `--cluster-id` (`string`) — filter by cluster ID
+- `--creation-method` (`string`) — [MANUAL, AUTO]       filter by creation method
+- `--backup-type` (`string`) — [CLUSTER, COLLECTION]filter by backup type
+- `--page-size` (`integer`) — items per page
+- `--page` (`integer`) — page number
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Describe — Get details of a backup.
 
 ```bash
 zilliz backup describe --cluster-id <cluster-id> --backup-id <backup-id>
+#   [--api-key <api-key>]
 ```
 
-### Delete a Backup
+**Flags:**
+- `--cluster-id` (**required**, `string`) — cluster ID
+- `--backup-id` (**required**, `string`) — backup ID
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Delete — Delete a backup.
 
 ```bash
-zilliz backup delete --cluster-id <cluster-id> --backup-id <backup-id-to-delete>
+zilliz backup delete --cluster-id <cluster-id> --backup-id <backup-id>
+#   [--api-key <api-key>]
 ```
 
-### Export a Backup
+**Flags:**
+- `--cluster-id` (**required**, `string`) — cluster ID
+- `--backup-id` (**required**, `string`) — backup ID to delete
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Export — Export a backup to external storage.
 
 ```bash
-zilliz backup export \
-  --cluster-id <cluster-id> \
-  --backup-id <backup-id> \
-  --integration-id <storage-integration-id>
-# Optional: --directory <directory>
+zilliz backup export --cluster-id <cluster-id> --backup-id <backup-id> --integration-id <integration-id>
+#   [--directory <directory>]
+#   [--api-key <api-key>]
 ```
 
-### Restore to a New Cluster
+**Flags:**
+- `--cluster-id` (**required**, `string`) — cluster ID
+- `--backup-id` (**required**, `string`) — backup ID
+- `--integration-id` (**required**, `string`) — storage integration ID
+- `--directory` (`string`) — target directory in external storage
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Restore Cluster — Restore a backup to a new cluster.
 
 ```bash
-zilliz backup restore-cluster \
-  --cluster-id <source-cluster-id> \
-  --backup-id <backup-id-to-restore> \
-  --project-id <target-project-id> \
-  --name <new-cluster-name> \
-  --cu-size <compute-units-for-new-cluster> \
-  --collection-status <LOADED|NOT_LOADED>
+zilliz backup restore-cluster --cluster-id <cluster-id> --backup-id <backup-id> --project-id <project-id> --name <name> --cu-size <cu-size> --collection-status <collection-status>
+#   [--api-key <api-key>]
 ```
 
-### Restore Specific Collections
+**Flags:**
+- `--cluster-id` (**required**, `string`) — source cluster ID
+- `--backup-id` (**required**, `string`) — backup ID to restore
+- `--project-id` (**required**, `string`) — target project ID
+- `--name` (**required**, `string`) — new cluster name
+- `--cu-size` (**required**, `integer`) — compute units for new cluster
+- `--collection-status` (**required**, `string`) — [LOADED, NOT_LOADED]collection state after restore
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Restore Collection — Restore specific collections from a backup.
 
 ```bash
-zilliz backup restore-collection \
-  --cluster-id <source-cluster-id> \
-  --backup-id <backup-id> \
-  --dest-cluster-id <destination-cluster-id>
-# Or use raw JSON: --body '{"collections": [{"source": "col1", "target": "col1_restored"}]}'
+zilliz backup restore-collection --cluster-id <cluster-id> --backup-id <backup-id> --dest-cluster-id <dest-cluster-id>
+#   [--api-key <api-key>]
 ```
 
-### Describe Backup Policy
+**Flags:**
+- `--cluster-id` (**required**, `string`) — source cluster ID
+- `--backup-id` (**required**, `string`) — backup ID
+- `--dest-cluster-id` (**required**, `string`) — destination cluster ID
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Describe Policy — Describe backup policy for a cluster.
 
 ```bash
 zilliz backup describe-policy --cluster-id <cluster-id>
+#   [--api-key <api-key>]
 ```
 
-### Update Backup Policy
+**Flags:**
+- `--cluster-id` (**required**, `string`) — cluster ID
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
+
+### Update Policy — Update backup policy for a cluster.
 
 ```bash
-zilliz backup update-policy --cluster-id <cluster-id> --auto-backup <true|false>
-# Optional:
-#   --frequency <frequency>
-#   --start-time <start-time>
-#   --retention-days <days-to-retain-backups>
-# Or use raw JSON: --body '{...}'
+zilliz backup update-policy --cluster-id <cluster-id> --auto-backup <auto-backup>
+#   [--frequency <frequency>]
+#   [--start-time <start-time>]
+#   [--retention-days <retention-days>]
+#   [--api-key <api-key>]
 ```
 
-## Backup Policy Format
+**Flags:**
+- `--cluster-id` (**required**, `string`) — cluster ID
+- `--auto-backup` (**required**, `boolean`) — turn auto-backup on or off
+- `--frequency` (`string`) — daily | weekdays | weekends | 1-7 (1=Mon, 7=Sun) e.g. 1,3,5
+- `--start-time` (`string`) — start hour in UTC, e.g. 02:00
+- `--retention-days` (`integer`) — days to retain backups (1-30)
+- `--api-key` (`string`, env `ZILLIZ_API_KEY`) — API key (overrides env/config)
 
-Frequency: `daily | weekdays | weekends | 1-7` (1=Mon, 7=Sun), e.g. `1,3,5`
+## Live help
 
-Start time: `HH:MM` or `HH:MM-HH:MM` (time window), e.g. `02:00` or `03:00-05:00`
+```bash
+zilliz backup --help
+```
 
-## Guidance
-
-- The backup type is automatically derived: if `--collection` is provided, it's a COLLECTION backup; otherwise it's a CLUSTER backup.
-- Backup creation, export, and restore operations are **asynchronous**. After starting, use `backup describe` to check progress.
-- The `--integration-id` for export refers to a cloud storage integration configured in the Zilliz Cloud console (see import skill for setup guidance).
-- Before deleting a backup, confirm with the user -- this is irreversible.
-- When restoring, explain the difference between cluster restore (new cluster) and collection restore (into existing cluster).
-- Suggest setting up a backup policy for production clusters.
+Destructive operations (`delete`, `drop`, `restore`) require explicit user confirmation before execution.
