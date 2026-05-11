@@ -14,6 +14,8 @@ Instead of memorizing CLI commands or switching to the web console, just describ
 - "Import data from S3 into my embeddings collection"
 - "Check the status of my import job"
 - "Show me this month's usage and invoices"
+- "Spin up a Vector Lake in us-east-1 and create an on-demand cluster with a 30-minute idle TTL"
+- "Refresh my external collection from Vector Lake and tell me when the job finishes"
 
 ## Installation
 
@@ -55,37 +57,43 @@ This guides you through installing the CLI, logging in, and connecting to a clus
 | Skill | Description |
 |-------|-------------|
 | `zilliz:setup` | Install zilliz-cli, log in, configure credentials, set active cluster context |
-| `zilliz:cluster` | Create, list, describe, delete, suspend, resume, or modify clusters |
+| `zilliz:cluster` | Create, list, describe, delete, suspend, resume, or modify clusters (including `create-vectorlake` for Vector Lake instances) |
+| `zilliz:on-demand-cluster` | Create, list, describe, or delete on-demand (Vector Lake) clusters with auto-suspend TTL |
 | `zilliz:database` | Create, list, describe, or drop databases |
 | `zilliz:collection` | Create, list, describe, drop, rename, load, release, manage aliases, and query per-collection metrics |
+| `zilliz:external-collection` | Trigger, describe, or list refresh jobs for external collections (Vector Lake-backed) |
 | `zilliz:index` | Create, list, describe, or drop indexes |
 | `zilliz:partition` | Create, list, load, release, or drop partitions |
 | `zilliz:vector` | Search, query, insert, upsert, get, or delete vectors |
-| `zilliz:import` | Bulk data import from cloud storage |
+| `zilliz:import` | Bulk data import from cloud storage; manage import stages |
 | `zilliz:backup` | Create, list, describe, delete, export, restore backups, or manage backup policies |
 | `zilliz:job` | Track async Cloud Job status (backup, restore, migration, import, clone) |
 | `zilliz:user-role` | Manage database users, roles, passwords, and access privileges |
 | `zilliz:monitoring` | Check cluster status, collection statistics, and load states |
 | `zilliz:billing` | Check usage, view invoices, or manage payment methods |
 | `zilliz:project-region` | Manage projects and storage volumes |
+| `zilliz:privatelink` | Manage PrivateLink endpoint services, endpoints, and whitelist |
 
 ## Capabilities
 
 | Area | What You Can Do |
 |------|----------------|
 | **Clusters** | Create, delete, suspend, resume, modify |
+| **Vector Lake** | Create Vector Lake instances; provision, list, describe, and delete on-demand clusters with auto-suspend TTL |
 | **Collections** | Create with custom schema, load, release, rename, drop |
+| **External Collections** | Trigger / describe / list refresh jobs against Vector Lake-backed sources |
 | **Vectors** | Search, query, insert, upsert, delete |
 | **Indexes** | Create, list, describe, drop |
 | **Databases** | Create, list, describe, drop |
 | **Users & Roles** | RBAC setup, privilege management |
 | **Backups** | Create, restore, export, policy management |
-| **Import** | Bulk data import from cloud storage |
+| **Import** | Bulk data import from cloud storage; managed import stages |
 | **Jobs** | Track async operations (backup, restore, migration, import, clone) |
 | **Partitions** | Create, load, release, manage |
 | **Monitoring** | Cluster status, collection stats, load states, cluster and per-collection time-series metrics |
 | **Billing** | Usage, invoices, payment methods |
 | **Projects** | Project and region management |
+| **PrivateLink** | Endpoint services, project endpoints, whitelist management |
 
 ## Requirements
 

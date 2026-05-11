@@ -64,6 +64,8 @@ For per-collection time series (QPS, latency, entity counts, hybrid-search alias
 zilliz collection metrics -c <collection-name> -m SEARCH_QPS --period 1h
 ```
 
+Both commands render an inline Braille line chart by default (one block per metric with a `min / max / avg / last` summary). Pass an explicit `-o table` (or `--output table`) for the pivot-table layout, or use `-o json` / `--query` to get raw data for scripting.
+
 ## Presenting Results
 
 When the user asks for a status overview, collect and present information as a summary table:

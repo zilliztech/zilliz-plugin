@@ -22,7 +22,10 @@ zilliz collection metrics --collection-name <collection-name> --metric <metric-n
 #   --period <duration>               e.g. 1h, 24h, 7d (mutually exclusive with --start/--end)
 #   --start <iso-8601> --end <iso-8601>
 #   --granularity <duration> / -g     e.g. 30s, 5m, 1h (auto-selected if omitted)
+#   -o table                          Render pivot table instead of the default inline chart
 ```
+
+The default output is an inline text chart: one block per metric with a summary line (`min / max / avg / last`) and a Braille-rendered line chart. Pass an explicit `-o table` (or `--output table`) to render the pivot-table layout — useful for terminals without good Braille font support. `-o json`, `-o yaml`, `-o csv`, and `--query` always bypass both renderers and return the raw response.
 
 Examples:
 
@@ -155,8 +158,6 @@ zilliz collection compact --name <collection-name>
 
 ### Collection Aliases
 
-Aliases are stable pointers to collections. Use them to swap the active collection behind a client (e.g. blue-green reindex, schema migration) without changing application code.
-
 #### Create an Alias
 
 ```bash
@@ -168,7 +169,6 @@ zilliz alias create --collection <target-collection-name> --alias <alias-name>
 
 ```bash
 zilliz alias list --database <database-name>
-# --database is required here (unlike other alias ops, which default to the context database)
 # Optional: --collection <filter-by-collection-name>
 ```
 
@@ -193,15 +193,6 @@ zilliz alias drop --alias <alias-name-to-drop>
 # Optional: --database <database-name>
 ```
 
-#### Example: Blue-Green Reassignment
-
-```bash
-# Point a production alias at a newly reindexed collection without client changes.
-zilliz alias describe --alias prod                  # confirm current target
-zilliz alias alter --collection v2 --alias prod     # cut traffic over to v2
-zilliz collection drop --name v1                    # only after verifying v2 serves traffic
-```
-
 ## Guidance
 
 - When the user wants to create a collection, ask about their use case to recommend appropriate dimension, metric type, and schema.
@@ -209,5 +200,3 @@ zilliz collection drop --name v1                    # only after verifying v2 se
 - A collection must be loaded before it can be searched or queried.
 - After creating a collection, suggest loading it if the user plans to query immediately.
 - Use `describe` to inspect schema before performing vector operations.
-- Aliases are the safe way to roll forward/back during reindex -- reassign with `alias alter` instead of renaming collections.
-- Dropping an alias does not delete the underlying collection; dropping the collection leaves a dangling alias -- drop the alias first or reassign it.

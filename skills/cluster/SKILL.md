@@ -45,10 +45,30 @@ zilliz cluster providers
 zilliz cluster regions --cloud-id <aws|gcp|azure>
 ```
 
+### Create a Vector Lake instance
+
+A Vector Lake (sometimes called a "VectorLake" cluster) is the storage layer
+that on-demand clusters attach to (see the `on-demand-cluster` skill). It is
+created via a hand-written subcommand calling
+`POST /v2/clusters/createVectorLake`:
+
+```bash
+zilliz cluster create-vectorlake \
+  --project-id <project-id> \
+  --region-id <region-id> \
+  [--session-ttl <duration>] \      # idle auto-suspend TTL, min 60s
+  [--max-query-node-cu <integer>] \
+  [--max-query-node-replicas <integer>]
+```
+
+After the Vector Lake is `RUNNING`, attach a query workload with
+`zilliz on-demand-cluster create --project-id <id> --region-id <region> --cu-size <n> --cluster-name <name>`.
+
 ### List Clusters
 
 ```bash
 zilliz cluster list
+# Optional: --region-id <filter-by-region-id>
 # Pagination: --page-size <n> --page <n>
 # Fetch all pages: --all
 ```
@@ -106,3 +126,5 @@ zilliz cluster regions
 - After creating a cluster, suggest setting it as the active context with `zilliz context set --cluster-id <id>`.
 - When a cluster is suspended, remind the user it must be resumed before data-plane operations.
 - Different cluster types have different capabilities. See the "Cluster Type Differences" table in the setup skill for details.
+- `cluster create-vectorlake` creates a Vector Lake storage instance, not a regular cluster. Query workloads against it run on on-demand clusters (see the `on-demand-cluster` skill). Do not pass `--type` to this subcommand; it has its own dedicated parameter set.
+- `cluster list` supports a `--region-id <region>` filter for scoping to a single region.
