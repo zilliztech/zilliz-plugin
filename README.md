@@ -29,12 +29,28 @@ Search for **zilliz** in the plugin directory, or add the marketplace manually:
 /plugin marketplace add zilliztech/zilliz-plugin
 ```
 
-Then install via the Discover tab in `/plugin`.
+`zilliztech/zilliz-plugin` is the GitHub repo. Once added, the marketplace is
+named **`zilliztech`** (from `marketplace.json`) and the plugin is named
+**`zilliz`**. Then install via the Discover tab in `/plugin`.
 
 ### Direct Install
 
 ```bash
-/plugin install zilliz@zilliztech/zilliz-plugin
+/plugin install zilliz@zilliztech
+```
+
+The format is `<plugin>@<marketplace>` — `zilliz@zilliztech`, **not**
+`zilliz@zilliztech/zilliz-plugin` (that repo path is not the marketplace name).
+
+### Upgrading
+
+`/plugin marketplace add` does not refresh an already-added marketplace, and
+`/plugin install` is a no-op if the plugin is already installed. To pull a new
+version:
+
+```bash
+/plugin marketplace update zilliztech
+/plugin update zilliz@zilliztech
 ```
 
 ### With OpenAI Codex

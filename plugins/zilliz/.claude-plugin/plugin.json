@@ -1,7 +1,7 @@
 {
   "name": "zilliz",
   "description": "Manage Zilliz Cloud clusters and Milvus vector databases from Claude Code using the zilliz-cli.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "author": {
     "name": "Zilliz",
     "email": "support@zilliz.com"
