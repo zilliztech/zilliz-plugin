@@ -1,7 +1,7 @@
 {
   "name": "zilliztech",
   "interface": {
-    "displayName": "Zilliz Cloud"
+    "displayName": "Zilliz"
   },
   "plugins": [
     {

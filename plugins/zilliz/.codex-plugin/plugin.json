@@ -18,7 +18,7 @@
     "rag"
   ],
   "interface": {
-    "displayName": "Zilliz Cloud",
+    "displayName": "Zilliz",
     "shortDescription": "Manage Zilliz Cloud & Milvus from Codex",
     "category": "Productivity"
   }
