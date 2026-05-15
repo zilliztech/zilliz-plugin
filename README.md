@@ -1,6 +1,8 @@
-# Zilliz Cloud Plugin for Claude Code
+# Zilliz Cloud Plugin for Claude Code & OpenAI Codex
 
-Your Zilliz Cloud console in Claude Code. This plugin enables Claude to operate the `zilliz-cli`, bringing the full power of [Zilliz Cloud](https://zilliz.com/) — cluster management, collection operations, vector search, RBAC, backups, and more — into your terminal through natural language.
+Your Zilliz Cloud console in your AI coding agent. This plugin lets Claude Code or OpenAI Codex operate the `zilliz-cli`, bringing the full power of [Zilliz Cloud](https://zilliz.com/) — cluster management, collection operations, vector search, RBAC, backups, and more — into your terminal through natural language.
+
+It ships as a **dual-format plugin**: `.claude-plugin/` for Claude Code and `.codex-plugin/` for Codex. The same `skills/` directory powers both runtimes.
 
 ## What It Does
 
@@ -35,27 +37,43 @@ Then install via the Discover tab in `/plugin`.
 /plugin install zilliz@zilliztech/zilliz-plugin
 ```
 
+### With OpenAI Codex
+
+Codex reads the same repo. Add it as a marketplace (Codex recognizes the
+legacy `.claude-plugin/marketplace.json`) and install the `zilliz` plugin:
+
+```bash
+codex plugin marketplace add zilliztech/zilliz-plugin
+codex plugin install zilliz
+```
+
+All skills are shared with the Claude Code build; the `quickstart` and `status`
+skills replace the Claude `/zilliz:*` slash commands under Codex.
+
 ## Quick Start
 
-After installing the plugin, run:
+After installing the plugin:
 
-```
-/zilliz:quickstart
-```
+- **Claude Code:** run `/zilliz:quickstart`
+- **Codex:** invoke the `quickstart` skill (e.g. "set up the Zilliz CLI")
 
 This guides you through installing the CLI, logging in, and connecting to a cluster.
 
-## Commands
+## Commands (Claude Code)
 
 | Command | Description |
 |---------|-------------|
 | `/zilliz:quickstart` | Install CLI, authenticate, and set up cluster context |
 | `/zilliz:status` | Show cluster status, collections, and statistics |
 
+Under Codex these are available as the `quickstart` and `status` skills below.
+
 ## Skills
 
 | Skill | Description |
 |-------|-------------|
+| `zilliz:quickstart` | One-shot onboarding: install CLI, authenticate, select and set cluster context |
+| `zilliz:status` | Overview of context, cluster details, databases, and collections with stats |
 | `zilliz:setup` | Install zilliz-cli, log in, configure credentials, set active cluster context |
 | `zilliz:cluster` | Create, list, describe, delete, suspend, resume, or modify clusters (including `create-vectorlake` for Vector Lake instances) |
 | `zilliz:on-demand-cluster` | Create, list, describe, or delete on-demand (Vector Lake) clusters with auto-suspend TTL |
