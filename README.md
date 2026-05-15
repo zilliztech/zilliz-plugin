@@ -2,7 +2,7 @@
 
 Your Zilliz Cloud console in your AI coding agent. This plugin lets Claude Code or OpenAI Codex operate the `zilliz-cli`, bringing the full power of [Zilliz Cloud](https://zilliz.com/) — cluster management, collection operations, vector search, RBAC, backups, and more — into your terminal through natural language.
 
-It ships as a **dual-format plugin**: `.claude-plugin/` for Claude Code and `.codex-plugin/` for Codex. The same `skills/` directory powers both runtimes.
+It ships as a **dual-format plugin** living in `plugins/zilliz/`: `.claude-plugin/plugin.json` for Claude Code and `.codex-plugin/plugin.json` for Codex, sharing one real `skills/` directory — no symlinks, no duplication. Both root `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` point their plugin source at `./plugins/zilliz`.
 
 ## What It Does
 
@@ -40,8 +40,8 @@ Then install via the Discover tab in `/plugin`.
 ### With OpenAI Codex
 
 Codex reads the same repo via `.agents/plugins/marketplace.json`, which points
-at the self-contained Codex plugin under `plugins/zilliz/` (its `skills/` is a
-symlink back to the shared top-level `skills/`). Add the marketplace:
+at the self-contained Codex plugin under `plugins/zilliz/` (its real `skills/`
+directory is shared with the Claude Code build). Add the marketplace:
 
 ```bash
 codex plugin marketplace add zilliztech/zilliz-plugin
