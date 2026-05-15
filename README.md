@@ -44,7 +44,6 @@ legacy `.claude-plugin/marketplace.json`) and install the `zilliz` plugin:
 
 ```bash
 codex plugin marketplace add zilliztech/zilliz-plugin
-codex plugin install zilliz
 ```
 
 All skills are shared with the Claude Code build; the `quickstart` and `status`
