@@ -39,12 +39,15 @@ Then install via the Discover tab in `/plugin`.
 
 ### With OpenAI Codex
 
-Codex reads the same repo. Add it as a marketplace (Codex recognizes the
-legacy `.claude-plugin/marketplace.json`) and install the `zilliz` plugin:
+Codex reads the same repo via `.agents/plugins/marketplace.json`, which points
+at the self-contained Codex plugin under `plugins/zilliz/` (its `skills/` is a
+symlink back to the shared top-level `skills/`). Add the marketplace:
 
 ```bash
 codex plugin marketplace add zilliztech/zilliz-plugin
 ```
+
+Then open `/plugins` in Codex and install **zilliz** from the marketplace.
 
 All skills are shared with the Claude Code build; the `quickstart` and `status`
 skills replace the Claude `/zilliz:*` slash commands under Codex.

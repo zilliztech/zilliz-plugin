@@ -1,16 +1,20 @@
 {
   "name": "zilliztech",
-  "description": "Official Zilliz Cloud plugins",
-  "owner": {
-    "name": "Zilliz",
-    "email": "support@zilliz.com"
+  "interface": {
+    "displayName": "Zilliz Cloud"
   },
   "plugins": [
     {
       "name": "zilliz",
-      "description": "Manage Zilliz Cloud clusters and Milvus vector databases using the zilliz-cli.",
-      "version": "1.4.0",
-      "source": "./"
+      "source": {
+        "source": "local",
+        "path": "./plugins/zilliz"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
     }
   ]
 }
