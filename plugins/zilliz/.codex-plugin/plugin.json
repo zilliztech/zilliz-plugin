@@ -1,6 +1,6 @@
 {
   "name": "zilliz",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Manage Zilliz Cloud clusters and Milvus vector databases using the zilliz-cli.",
   "skills": "./skills/",
   "author": {
