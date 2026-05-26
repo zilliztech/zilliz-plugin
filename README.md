@@ -65,6 +65,14 @@ codex plugin marketplace add zilliztech/zilliz-plugin
 
 Then open `/plugins` in Codex and install **zilliz** from the marketplace.
 
+#### Via codex-marketplace (one-liner)
+
+Alternatively, install directly with [`codex-marketplace`](https://www.npmjs.com/package/codex-marketplace):
+
+```bash
+npx codex-marketplace add zilliztech/zilliz-plugin --plugins
+```
+
 All skills are shared with the Claude Code build; the `quickstart` and `status`
 skills replace the Claude `/zilliz:*` slash commands under Codex.
 
