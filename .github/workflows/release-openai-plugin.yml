@@ -1,0 +1,76 @@
+name: Release OpenAI Plugin
+
+on:
+  pull_request:
+    branches:
+      - openai-plugin
+  push:
+    branches:
+      - openai-plugin
+    tags:
+      - "openai-v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Read plugin version
+        id: metadata
+        run: |
+          version=$(python3 -c 'import json; print(json.load(open(".codex-plugin/plugin.json", encoding="utf-8"))["version"])')
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Validate tag version
+        if: startsWith(github.ref, 'refs/tags/openai-v')
+        env:
+          PLUGIN_VERSION: ${{ steps.metadata.outputs.version }}
+        run: |
+          expected_tag="openai-v${PLUGIN_VERSION}"
+          if [[ "$GITHUB_REF_NAME" != "$expected_tag" ]]; then
+            echo "Expected tag $expected_tag but received $GITHUB_REF_NAME" >&2
+            exit 1
+          fi
+
+      - name: Validate plugin
+        run: python3 scripts/validate_openai_plugin.py
+
+      - name: Package plugin
+        run: scripts/package_openai_plugin.sh
+
+      - name: Inspect archive contents
+        run: |
+          archive="dist/zilliz-openai-plugin-v${{ steps.metadata.outputs.version }}.zip"
+          unzip -Z1 "$archive"
+          if unzip -Z1 "$archive" | grep -Eq '(^|/)(commands|docs|scripts|\.github|\.claude-plugin|\.agents)(/|$)'; then
+            echo "Release archive contains a forbidden path" >&2
+            exit 1
+          fi
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: zilliz-openai-plugin-v${{ steps.metadata.outputs.version }}
+          path: |
+            dist/zilliz-openai-plugin-v${{ steps.metadata.outputs.version }}.zip
+            dist/zilliz-openai-plugin-v${{ steps.metadata.outputs.version }}.zip.sha256
+          if-no-files-found: error
+
+      - name: Create GitHub release
+        if: startsWith(github.ref, 'refs/tags/openai-v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PLUGIN_VERSION: ${{ steps.metadata.outputs.version }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "dist/zilliz-openai-plugin-v${PLUGIN_VERSION}.zip" \
+            "dist/zilliz-openai-plugin-v${PLUGIN_VERSION}.zip.sha256" \
+            --title "Zilliz OpenAI Plugin v${PLUGIN_VERSION}" \
+            --generate-notes
