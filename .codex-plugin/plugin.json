@@ -1,0 +1,38 @@
+{
+  "name": "zilliz",
+  "version": "1.4.2",
+  "description": "Manage Zilliz Cloud clusters and Milvus vector databases using the zilliz-cli.",
+  "skills": "./skills/",
+  "author": {
+    "name": "Zilliz",
+    "email": "support@zilliz.com"
+  },
+  "homepage": "https://github.com/zilliztech/zilliz-plugin",
+  "repository": "https://github.com/zilliztech/zilliz-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "zilliz",
+    "milvus",
+    "vector-database",
+    "semantic-search",
+    "rag"
+  ],
+  "interface": {
+    "displayName": "Zilliz",
+    "shortDescription": "Manage Zilliz Cloud and Milvus with an agent",
+    "longDescription": "Use natural language to operate Zilliz Cloud and Milvus through the zilliz-cli, including clusters, collections, vector data, backups, monitoring, and access control.",
+    "developerName": "Zilliz",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://zilliz.com/",
+    "privacyPolicyURL": "https://zilliz.com/privacy-policy",
+    "defaultPrompt": [
+      "Show the status of my Zilliz Cloud environment.",
+      "List my clusters and summarize their health.",
+      "Help me create and search a vector collection."
+    ]
+  }
+}
