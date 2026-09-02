@@ -5,7 +5,7 @@ description: Use when the user wants to create, list, describe, drop, rename, lo
 
 ## Prerequisites
 
-1. CLI installed, logged in, and cluster context set (see setup skill).
+1. CLI installed, a usable data-plane credential configured, and cluster context set (see setup skill).
 
 ## Commands Reference
 

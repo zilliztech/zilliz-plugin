@@ -5,7 +5,7 @@ description: Use when the user wants to create, list, describe, or drop database
 
 ## Prerequisites
 
-1. CLI installed, logged in, and cluster context set (see setup skill).
+1. CLI installed, a usable data-plane credential configured, and cluster context set (see setup skill).
 
 ## Commands Reference
 
@@ -16,7 +16,7 @@ zilliz database create --name <database-name>
 # Or use raw JSON: --body '{"properties": {}}'
 ```
 
-*Create a new database. (Dedicated only)*
+Availability depends on the current endpoint, credential, and service configuration. Report the CLI or server response without inferring support from a cluster label alone.
 
 ### List Databases
 
@@ -30,7 +30,7 @@ zilliz database list
 zilliz database describe --name <database-name>
 ```
 
-*Get details of a database. (Dedicated only)*
+If details are unavailable, fall back to the information returned by `database list` and the current context.
 
 ### Drop a Database
 
@@ -38,12 +38,12 @@ zilliz database describe --name <database-name>
 zilliz database drop --name <database-name-to-drop>
 ```
 
-*Drop a database. (Dedicated only)*
+This action is destructive. Confirm the exact database and impact immediately before execution.
 
 ## Guidance
 
-- Database create, describe, and drop operations are only available on **Dedicated** clusters. `database list` works on all cluster types.
-- Every cluster has a "default" database.
+- Use `database list` and the current context to discover available database names. Do not assume that a database named `default` exists or is accessible.
+- When an operation is rejected, report the returned permission or availability error and continue with independent database capabilities where possible.
 - Before dropping a database, confirm with the user -- all collections in it will be deleted.
 - After creating a database, suggest switching context: `zilliz context set --database <db-name>`.
 - To work with collections in a non-default database, use `--database` flag on collection commands or switch context.

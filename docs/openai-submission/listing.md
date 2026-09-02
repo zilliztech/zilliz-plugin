@@ -17,6 +17,6 @@ Manage Zilliz Cloud and Milvus through natural language with the zilliz-cli.
 
 ## Long description
 
-Use the Zilliz plugin to manage Zilliz Cloud and Milvus from ChatGPT and Codex. The included skills guide the agent through installing and authenticating the zilliz-cli, selecting cluster context, managing clusters and databases, working with collections and vector data, monitoring health, handling backups and imports, and managing access controls.
+Use the Zilliz plugin to work with Zilliz Cloud and Milvus from ChatGPT and Codex. The included skills guide the agent through installing and configuring the zilliz-cli, discovering available capabilities, selecting an explicit data context, working with collections and vector data, and using cloud-management features when the configured credentials expose them.
 
-The plugin runs CLI commands in the user's environment. Interactive authentication remains in the user's own terminal, and the plugin must never request passwords, API keys, or tokens in the conversation.
+The plugin runs CLI commands in the user's environment. Available operations depend on the configured endpoint, credentials, and service configuration. Interactive authentication remains in the user's own terminal, and the plugin must never request passwords, API keys, or tokens in the conversation.
