@@ -25,60 +25,51 @@ Verify:
 zilliz --version
 ```
 
-## Step 2: Authenticate
+## Step 2: Inspect available access
 
-Check if already logged in:
+Inspect control-plane authentication and the existing data-plane context independently:
 
 ```bash
 zilliz auth status
+zilliz context current --output json
 ```
 
-If not logged in, instruct the user to open their own terminal and run one of:
+If the requested workflow needs control-plane access and no usable authentication is available, instruct the user to open their own terminal and run one of:
 
-1. **Browser login (recommended)** — `zilliz login` — opens browser for OAuth, full feature access.
+1. **Browser login** — `zilliz login` — opens a browser for OAuth and uses the account's assigned permissions.
 2. **API Key via login** — `zilliz login --api-key` — prompts for API key, no browser needed.
 3. **API Key via configure (legacy)** — `zilliz configure` — prompts for API key, simpler setup.
-4. **Environment variable** — add `export ZILLIZ_API_KEY=<key>` to `.zshrc` / `.bashrc`.
+4. **Environment variable** — configure `ZILLIZ_API_KEY` with a token supported by the intended API endpoint.
 
 **IMPORTANT:** These commands require interactive input and cannot run inside the agent. Do NOT ask the user to paste API keys into the chat.
 
-Wait for the user to confirm login is complete, then verify:
+Do not require `zilliz auth status` to succeed for a data-plane-only workflow. If an endpoint and context are already available, validate them with `zilliz database list --output json` or `zilliz collection list --output json`.
+
+## Step 3: Resolve the target context
+
+When control-plane discovery is available, list clusters:
 
 ```bash
-zilliz auth status
+zilliz cluster list --output json
 ```
 
-## Step 3: Select a Cluster
-
-List available clusters:
+If discovery is unavailable, ask the user to configure the cluster ID and endpoint in their own terminal. Set an explicit context instead of treating discovery failure as an authentication failure:
 
 ```bash
-zilliz cluster list
+zilliz context set --cluster-id <cluster-id> --endpoint <endpoint>
+zilliz database list --output json
+zilliz context set --database <database-name>
 ```
 
-If no clusters exist, offer to create one:
+Use a database returned by the service or an existing database already stored in context. Do not assume its name.
+
+## Step 4: Verify the requested capability
+
+Confirm the data-plane context and perform a non-destructive probe:
 
 ```bash
-zilliz project list
-zilliz cluster regions
-zilliz cluster create --type serverless --name <name> --project-id <id> --region <region>
+zilliz context current --output json
+zilliz collection list --output json
 ```
 
-## Step 4: Set Cluster Context
-
-Set the active cluster for data operations:
-
-```bash
-zilliz context set --cluster-id <selected-cluster-id>
-```
-
-## Step 5: Verify
-
-Confirm everything works:
-
-```bash
-zilliz context current
-zilliz collection list
-```
-
-Report the setup result to the user, showing their cluster ID, endpoint, and database.
+If the user also needs control-plane operations, verify the relevant read command separately. Report which capabilities were verified and which were unavailable without inferring the reason from a service label alone.

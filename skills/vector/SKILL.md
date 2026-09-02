@@ -5,7 +5,7 @@ description: Use when the user wants to search, query, insert, upsert, get, or d
 
 ## Prerequisites
 
-1. CLI installed, logged in, and cluster context set (see setup skill).
+1. CLI installed, a usable data-plane credential configured, and cluster context set (see setup skill).
 2. Target collection must exist and be loaded (see collection skill).
 
 ## Commands Reference
