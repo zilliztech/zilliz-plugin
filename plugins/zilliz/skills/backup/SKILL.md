@@ -65,7 +65,8 @@ zilliz backup restore-cluster \
   --project-id <target-project-id> \
   --name <new-cluster-name> \
   --cu-size <compute-units-for-new-cluster> \
-  --collection-status <LOADED|NOT_LOADED>
+  --collection-status <KEEP|RELEASE>
+# Optional: --restore-version-policy <LATEST|ORIGINAL>
 ```
 
 ### Restore Specific Collections

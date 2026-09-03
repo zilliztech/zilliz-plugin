@@ -65,14 +65,6 @@ codex plugin marketplace add zilliztech/zilliz-plugin
 
 Then open `/plugins` in Codex and install **zilliz** from the marketplace.
 
-#### Via codex-marketplace (one-liner)
-
-Alternatively, install directly with [`codex-marketplace`](https://www.npmjs.com/package/codex-marketplace):
-
-```bash
-npx codex-marketplace add zilliztech/zilliz-plugin --plugins
-```
-
 All skills are shared with the Claude Code build; the `quickstart` and `status`
 skills replace the Claude `/zilliz:*` slash commands under Codex.
 
@@ -113,6 +105,7 @@ Under Codex these are available as the `quickstart` and `status` skills below.
 | `zilliz:backup` | Create, list, describe, delete, export, restore backups, or manage backup policies |
 | `zilliz:job` | Track async Cloud Job status (backup, restore, migration, import, clone) |
 | `zilliz:user-role` | Manage database users, roles, passwords, and access privileges |
+| `zilliz:acl` | Cloud-level RBAC: custom org/project roles, member grants, and SCIM group grants |
 | `zilliz:monitoring` | Check cluster status, collection statistics, and load states |
 | `zilliz:billing` | Check usage, view invoices, or manage payment methods |
 | `zilliz:project-region` | Manage projects and storage volumes |
@@ -130,6 +123,7 @@ Under Codex these are available as the `quickstart` and `status` skills below.
 | **Indexes** | Create, list, describe, drop |
 | **Databases** | Create, list, describe, drop |
 | **Users & Roles** | RBAC setup, privilege management |
+| **Access Control** | Cloud-level RBAC: custom org/project roles with policies, member and SCIM group grants |
 | **Backups** | Create, restore, export, policy management |
 | **Import** | Bulk data import from cloud storage; managed import stages |
 | **Jobs** | Track async operations (backup, restore, migration, import, clone) |

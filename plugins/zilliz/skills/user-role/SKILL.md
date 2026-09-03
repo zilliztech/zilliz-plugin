@@ -145,3 +145,8 @@ Common privileges by object type:
 - When setting up RBAC, suggest a workflow: create role, grant privileges, create user, assign role.
 - Before dropping a user or role, confirm with the user.
 - Use `*` as object-name to grant privilege on all objects of that type.
+- These commands are **Milvus database RBAC**, scoped to one cluster. They do
+  not control who can create, modify, or delete cloud resources -- that is
+  cloud-level RBAC over organizations and projects, managed with `zilliz acl`
+  (see the acl skill). Granting a Milvus role never grants cloud permissions,
+  and vice versa.
