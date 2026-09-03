@@ -1,6 +1,6 @@
 {
   "name": "zilliz",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Work with Zilliz Cloud and Milvus vector databases using the zilliz-cli.",
   "skills": "./skills/",
   "author": {
@@ -23,6 +23,8 @@
     "longDescription": "Use natural language to work with Zilliz Cloud and Milvus through the zilliz-cli. The plugin discovers available capabilities from the configured endpoint and credentials, and supports data operations as well as cloud-management workflows when available.",
     "developerName": "Zilliz",
     "category": "Productivity",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
     "capabilities": [
       "Read",
       "Write"

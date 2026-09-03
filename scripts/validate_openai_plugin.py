@@ -2,6 +2,7 @@
 
 import json
 import re
+import struct
 import sys
 from pathlib import Path
 
@@ -9,6 +10,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = REPO_ROOT / ".codex-plugin" / "plugin.json"
 SKILLS_PATH = REPO_ROOT / "skills"
+PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 SEMVER_PATTERN = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$")
 FORBIDDEN_RUNTIME_PATTERNS = {
     "Claude Code": re.compile(r"Claude Code", re.IGNORECASE),
@@ -68,8 +70,25 @@ def validate_manifest() -> str:
     interface = manifest["interface"]
     if not isinstance(interface, dict):
         fail("plugin.interface must be an object")
-    for key in ("displayName", "shortDescription", "category"):
+    for key in ("displayName", "shortDescription", "category", "composerIcon", "logo"):
         require_mapping_value(interface, key, "plugin.interface")
+
+    for key in ("composerIcon", "logo"):
+        asset_reference = interface[key]
+        if not isinstance(asset_reference, str) or not asset_reference.startswith("./assets/"):
+            fail(f"plugin.interface.{key} must reference './assets/...'")
+
+        asset_path = REPO_ROOT / asset_reference.removeprefix("./")
+        if not asset_path.is_file():
+            fail(f"missing visual asset: {asset_path.relative_to(REPO_ROOT)}")
+
+        data = asset_path.read_bytes()
+        if len(data) < 24 or data[:8] != PNG_SIGNATURE or data[12:16] != b"IHDR":
+            fail(f"visual asset must be a PNG: {asset_path.relative_to(REPO_ROOT)}")
+
+        width, height = struct.unpack(">II", data[16:24])
+        if width != height:
+            fail(f"visual asset must be square: {asset_path.relative_to(REPO_ROOT)}")
 
     return str(manifest["version"])
 

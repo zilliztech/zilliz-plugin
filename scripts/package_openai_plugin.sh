@@ -21,6 +21,7 @@ archive_path="$dist_dir/$archive_name"
 mkdir -p "$dist_dir" "$staging_dir/zilliz"
 cp -R "$repo_root/.codex-plugin" "$staging_dir/zilliz/.codex-plugin"
 cp -R "$repo_root/skills" "$staging_dir/zilliz/skills"
+cp -R "$repo_root/assets" "$staging_dir/zilliz/assets"
 
 find "$staging_dir" -name '.DS_Store' -delete
 rm -f "$archive_path" "$archive_path.sha256"

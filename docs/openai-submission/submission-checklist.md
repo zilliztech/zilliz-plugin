@@ -9,7 +9,7 @@
 - [ ] Credentials are never requested in the conversation.
 - [ ] `python3 scripts/validate_openai_plugin.py` passes.
 - [ ] `scripts/package_openai_plugin.sh` produces the expected ZIP and checksum.
-- [ ] The ZIP contains only `zilliz/.codex-plugin/` and `zilliz/skills/`.
+- [ ] The ZIP contains only `zilliz/.codex-plugin/`, `zilliz/skills/`, and `zilliz/assets/`.
 - [ ] The ZIP was tested in a clean environment.
 
 ## Portal listing
