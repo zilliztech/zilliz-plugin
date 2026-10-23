@@ -1,6 +1,6 @@
 ---
 name: import
-description: Use when the user wants to import bulk data into a Milvus collection via Zilliz Cloud import jobs, or manage import stages (pre-uploaded file holders that import jobs reference).
+description: Use when the user wants to import bulk data into a Milvus collection via Zilliz Cloud import jobs, from object storage or from files uploaded to a volume.
 ---
 
 ## Prerequisites
@@ -10,9 +10,7 @@ description: Use when the user wants to import bulk data into a Milvus collectio
 
 ## Commands Reference
 
-### Import Jobs
-
-#### Start an Import Job
+### Start an Import Job
 
 ```bash
 zilliz import start --collection <target-collection-name>
@@ -20,10 +18,10 @@ zilliz import start --collection <target-collection-name>
 #   --cluster-id <target-cluster-id>
 #   --project-id <project-id>
 #   --region-id <region-id>
-# Or use raw JSON: --body '{"files": [["s3://bucket/path/data.parquet"]]}'
+# Or use raw JSON: --body '{"volumeName": "my-volume", "dataPaths": [["data/part-1.parquet"]]}'
 ```
 
-#### List Imports
+### List Imports
 
 ```bash
 zilliz import list
@@ -34,7 +32,7 @@ zilliz import list
 #   --database <database-name>
 ```
 
-#### Check Import Status
+### Check Import Status
 
 ```bash
 zilliz import status --job-id <import-job-id>
@@ -44,60 +42,34 @@ zilliz import status --job-id <import-job-id>
 #   --region-id <region-id>
 ```
 
-### Import Stages
+## Import Sources
 
-#### List Stages
+`import start` reads its source from `--body`. There are two kinds of source:
 
-```bash
-zilliz stage list
-# Optional: --project-id <filter-by-project-id>
-# Pagination: --page-size <n> --page <n>
-# Fetch all pages: --all
-```
+- **A managed volume** (preferred when the files are local). Upload them with
+  `zilliz volume upload` (see the volume skill), then reference the
+  volume and the file paths inside it:
 
-#### Create a Stage
+  ```bash
+  zilliz import start --cluster-id <cluster-id> --collection <collection> \
+    --body '{"volumeName": "<volume-name>", "dataPaths": [["data/2026-10/part-1.parquet"]]}'
+  ```
 
-```bash
-zilliz stage create \
-  --project-id <owning-project-id> \
-  --region-id <cloud-region> \
-  --stage-name <stage-name>
-```
+- **Object storage URLs** the user already has, with access keys when the
+  bucket is not public:
 
-#### Delete a Stage
+  ```bash
+  zilliz import start --cluster-id <cluster-id> --collection <collection> \
+    --body '{"objectUrls": [["s3://bucket/path/data.parquet"]], "accessKey": "<ak>", "secretKey": "<sk>"}'
+  ```
 
-```bash
-zilliz stage delete --stage-name <stage-name>
-```
+Each inner list in `dataPaths` / `objectUrls` is one file group. Supported
+file formats: Parquet, JSON, CSV. `--body` also accepts `dbName` and
+`partitionName`.
 
-#### Apply
-
-```bash
-zilliz stage apply --stage-name <stage-name>
-# Optional:
-#   --project-id <project-id>
-#   --region-id <region-id>
-#   --cluster-id <target-cluster-id>
-#   --path <stage-subpath>
-```
-
-## Integration Setup
-
-Import requires a cloud storage integration to access data files. The `integration-id` is configured in the Zilliz Cloud console under **Project Settings > Integrations**. Ensure the integration has read access to the source bucket and path.
-
-Supported file formats: Parquet, JSON, CSV.
-
-## Stages vs. Direct Integrations
-
-A **stage** is a named, project-scoped handle to a pre-uploaded set of files in
-managed cloud storage. Import jobs reference either:
-
-- a customer-owned bucket via an integration (the original flow above), or
-- a stage (`zilliz stage create --project-id <id> --region-id <region> --stage-name <name>`), which is preferable when the user wants Zilliz Cloud to host the staging bucket.
-
-`stage apply` updates an existing stage in place; `stage delete` removes it
-(confirm with the user first -- pending import jobs referencing the stage
-will fail).
+Import stages (`zilliz stage ...`) are deprecated in favor of volumes. The
+commands still work for existing stages, but do not suggest them for new
+imports.
 
 ## Import Targets
 
@@ -114,6 +86,6 @@ without `--region-id`.
 ## Guidance
 
 - Import jobs run asynchronously. After starting a job, use `import status` to track progress.
-- The data files must be accessible from Zilliz Cloud (either via a configured integration or via a stage).
+- Never echo the user's `accessKey` / `secretKey` back in a reply; prefer a volume when the files are local.
 - The collection schema must match the data file structure.
 - When importing into a Vector Lake / on-demand-cluster setup, prefer the `--project-id` + `--region-id` form -- on-demand clusters do not have a stable single cluster ID to point at.

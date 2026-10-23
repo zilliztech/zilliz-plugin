@@ -101,15 +101,17 @@ Under Codex these are available as the `quickstart` and `status` skills below.
 | `zilliz:index` | Create, list, describe, or drop indexes |
 | `zilliz:partition` | Create, list, load, release, or drop partitions |
 | `zilliz:vector` | Search, query, insert, upsert, get, or delete vectors |
-| `zilliz:import` | Bulk data import from cloud storage; manage import stages |
+| `zilliz:import` | Bulk data import from object storage or from files uploaded to a volume |
 | `zilliz:backup` | Create, list, describe, delete, export, restore backups, or manage backup policies |
 | `zilliz:job` | Track async Cloud Job status (backup, restore, migration, import, clone) |
 | `zilliz:user-role` | Manage database users, roles, passwords, and access privileges |
 | `zilliz:acl` | Cloud-level RBAC: custom org/project roles, member grants, and SCIM group grants |
 | `zilliz:monitoring` | Check cluster status, collection statistics, and load states |
 | `zilliz:billing` | Check usage, view invoices, or manage payment methods |
-| `zilliz:project-region` | Manage projects and storage volumes |
+| `zilliz:project-region` | Manage projects and bind additional regions |
+| `zilliz:volume` | Manage volumes and upload local files or directories into a managed volume |
 | `zilliz:privatelink` | Manage PrivateLink endpoint services, endpoints, and whitelist |
+| `zilliz:storage-integration` | Connect your own S3 / Azure Blob / GCS bucket: generate the access policy, validate, and manage integrations |
 
 ## Capabilities
 
@@ -125,13 +127,15 @@ Under Codex these are available as the `quickstart` and `status` skills below.
 | **Users & Roles** | RBAC setup, privilege management |
 | **Access Control** | Cloud-level RBAC: custom org/project roles with policies, member and SCIM group grants |
 | **Backups** | Create, restore, export, policy management |
-| **Import** | Bulk data import from cloud storage; managed import stages |
+| **Import** | Bulk data import from object storage or volumes |
 | **Jobs** | Track async operations (backup, restore, migration, import, clone) |
 | **Partitions** | Create, load, release, manage |
 | **Monitoring** | Cluster status, collection stats, load states, cluster and per-collection time-series metrics |
 | **Billing** | Usage, invoices, payment methods |
 | **Projects** | Project and region management |
+| **Volumes** | Create and manage volumes; upload local files for import |
 | **PrivateLink** | Endpoint services, project endpoints, whitelist management |
+| **Storage Integrations** | Connect customer-owned buckets on AWS, Azure, and GCP |
 
 ## Requirements
 
