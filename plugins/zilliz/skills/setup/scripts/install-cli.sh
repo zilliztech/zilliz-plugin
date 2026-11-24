@@ -9,10 +9,11 @@
 #    bash ./install-cli.sh
 #
 #  Options (via environment variables):
-#    ZILLIZ_VERSION=v2.0.0       Install a specific version (default: latest)
+#    ZILLIZ_VERSION=v2.0.1       Install a specific version (default: latest)
 #    ZILLIZ_INSTALL_DIR          Directory for zilliz/zz symlinks (default: ~/.local/bin)
 #    ZILLIZ_HOME                 Directory for runtime bundle (default: ~/.local/share/zilliz)
 #    ZILLIZ_RELEASE_BASE_URL     Override release asset base URL (requires ZILLIZ_VERSION)
+#    ZILLIZ_SKIP_CHECKSUM=1      Skip SHA-256 verification (legacy pre-2.0 releases only)
 # ----------------------------------------------------------------------
 set -euo pipefail
 
@@ -63,6 +64,25 @@ detect_target_triple() {
     esac
 }
 
+resolve_latest_tag() {
+    local latest_url=""
+    local resolved=""
+    latest_url=$(curl -fsSLI -o /dev/null -w '%{url_effective}' "https://github.com/${REPO}/releases/latest" 2>/dev/null || true)
+    case "${latest_url}" in
+        */releases/tag/*)
+            resolved="${latest_url##*/releases/tag/}"
+            resolved="${resolved%%\?*}"
+            resolved="${resolved%%#*}"
+            ;;
+    esac
+    if [ -z "${resolved}" ]; then
+        resolved=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" 2>/dev/null \
+            | grep '"tag_name"' | head -1 | cut -d'"' -f4 || true)
+    fi
+    [ -n "${resolved}" ] || error "Failed to resolve latest version from GitHub Releases. Set ZILLIZ_VERSION=v2.0.1 explicitly to bypass version lookup."
+    printf '%s' "${resolved}"
+}
+
 verify_checksum() {
     local dir="$1"
     local archive="$2"
@@ -103,9 +123,7 @@ main() {
             error "ZILLIZ_VERSION must be set explicitly when ZILLIZ_RELEASE_BASE_URL is used."
         fi
         info "Resolving latest Zilliz CLI release..."
-        tag=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" \
-              | grep '"tag_name"' | head -1 | cut -d'"' -f4)
-        [ -n "${tag}" ] || error "Failed to resolve latest version from GitHub Releases."
+        tag="$(resolve_latest_tag)"
     fi
 
     local version="${tag}"

@@ -9,7 +9,7 @@ description: Use when the user wants to create, list, describe, drop, rename, lo
 
 ## Commands Reference
 
-All collection commands accept an optional `--database <db-name>` flag to target a non-default database. If omitted, the database from the current context is used.
+Data-plane collection and alias commands accept an optional `--database <db-name>` flag to target a non-default database (`zilliz collection metrics` is a control-plane command and uses `--cluster-id` instead). If omitted, the database from the current context is used.
 
 ## Collection metrics
 

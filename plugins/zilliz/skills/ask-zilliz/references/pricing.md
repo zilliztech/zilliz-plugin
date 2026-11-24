@@ -3,8 +3,8 @@
 ## ⚠️ CRITICAL: Pricing Verification Required
 
 **Before mentioning ANY price**:
-1. Query Inkeep MCP: `mcp__inkeep__ask-question-about-zilliz-cloud`
-2. Add disclaimer with official links
+1. Check live pricing on the official Zilliz Pricing Calculator or Price List below (do not rely on memorized rates without verification)
+2. Add the required disclaimer with official links
 
 **Official Resources**:
 - **Calculator**: https://zilliz.com/pricing#calculator
