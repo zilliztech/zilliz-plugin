@@ -13,10 +13,16 @@ Check if already installed:
 zilliz --version
 ```
 
-If not installed or needs upgrading:
+If not installed or needs upgrading, run the bundled installer script from the `setup` skill directory (resolve `<quickstart-skill-dir>` to the directory containing this `SKILL.md` file):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/zilliztech/zilliz-cli/master/install.sh | bash
+# macOS / Linux
+bash "<quickstart-skill-dir>/../setup/scripts/install-cli.sh"
+```
+
+```powershell
+# Windows (PowerShell)
+powershell -ExecutionPolicy Bypass -File "<quickstart-skill-dir>\..\setup\scripts\install-cli.ps1"
 ```
 
 Verify:
@@ -35,12 +41,12 @@ zilliz auth status
 
 If not logged in, instruct the user to open their own terminal and run one of:
 
-1. **Browser login (recommended)** — `zilliz login` — opens browser for OAuth, full feature access.
-2. **API Key via login** — `zilliz login --api-key` — prompts for API key, no browser needed.
-3. **API Key via configure (legacy)** — `zilliz configure` — prompts for API key, simpler setup.
-4. **Environment variable** — add `export ZILLIZ_API_KEY=<key>` to `.zshrc` / `.bashrc`.
+1. **Browser login (recommended)** -- `zilliz login` -- opens browser for OAuth, full feature access.
+2. **API Key via login** -- `zilliz login --api-key` -- prompts for API key, no browser needed.
+3. **API Key via configure (legacy)** -- `zilliz configure` -- prompts for API key, simpler setup.
+4. **Environment variable** -- add `export ZILLIZ_API_KEY=<key>` to `.zshrc` / `.bashrc`.
 
-**IMPORTANT:** These commands require interactive input and cannot run inside the agent. Do NOT ask the user to paste API keys into the chat.
+**IMPORTANT:** These commands require interactive input and cannot run inside a non-interactive AI coding agent session. Do NOT ask the user to paste API keys into the chat.
 
 Wait for the user to confirm login is complete, then verify:
 

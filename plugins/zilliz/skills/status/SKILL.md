@@ -1,6 +1,6 @@
 ---
 name: status
-description: Use when the user wants a comprehensive overview of their current Zilliz Cloud environment — context, cluster details, databases, and collections with stats.
+description: Use when the user wants a comprehensive overview of their current Zilliz Cloud environment -- context, cluster details, databases, and collections with stats.
 ---
 
 Gather and display a status overview of the user's current Zilliz Cloud environment. Run commands with `--output json` for structured data, then present a formatted summary.

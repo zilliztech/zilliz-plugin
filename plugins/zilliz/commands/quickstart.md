@@ -1,6 +1,6 @@
 ---
 name: quickstart
-description: Set up Zilliz Cloud CLI — install, authenticate, and configure your cluster context in one go.
+description: Set up Zilliz Cloud CLI -- install, authenticate, and configure your cluster context in one go.
 ---
 
 Guide the user through the complete Zilliz Cloud CLI setup. Follow these steps in order:
@@ -13,10 +13,16 @@ Check if already installed:
 zilliz --version
 ```
 
-If not installed or needs upgrading:
+If not installed or needs upgrading, run the bundled installer script shipped inside this plugin (resolve `<plugin-dir>` to the `plugins/zilliz` directory containing `commands/` and `skills/`):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/zilliztech/zilliz-cli/master/install.sh | bash
+# macOS / Linux
+bash "<plugin-dir>/skills/setup/scripts/install-cli.sh"
+```
+
+```powershell
+# Windows (PowerShell)
+powershell -ExecutionPolicy Bypass -File "<plugin-dir>\skills\setup\scripts\install-cli.ps1"
 ```
 
 Verify:
@@ -35,12 +41,12 @@ zilliz auth status
 
 If not logged in, instruct the user to open their own terminal and run one of:
 
-1. **Browser login (recommended)** — `zilliz login` — opens browser for OAuth, full feature access.
-2. **API Key via login** — `zilliz login --api-key` — prompts for API key, no browser needed.
-3. **API Key via configure (legacy)** — `zilliz configure` — prompts for API key, simpler setup.
-4. **Environment variable** — add `export ZILLIZ_API_KEY=<key>` to `.zshrc` / `.bashrc`.
+1. **Browser login (recommended)** -- `zilliz login` -- opens browser for OAuth, full feature access.
+2. **API Key via login** -- `zilliz login --api-key` -- prompts for API key, no browser needed.
+3. **API Key via configure (legacy)** -- `zilliz configure` -- prompts for API key, simpler setup.
+4. **Environment variable** -- add `export ZILLIZ_API_KEY=<key>` to `.zshrc` / `.bashrc`.
 
-**IMPORTANT:** These commands require interactive input and cannot run inside Claude Code. Do NOT ask the user to paste API keys into the chat.
+**IMPORTANT:** These commands require interactive input and cannot run inside a non-interactive AI coding agent session. Do NOT ask the user to paste API keys into the chat.
 
 Wait for the user to confirm login is complete, then verify:
 
