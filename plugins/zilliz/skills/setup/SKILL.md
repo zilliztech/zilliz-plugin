@@ -148,7 +148,7 @@ zilliz context current
 
 ## Output Format
 
-All zilliz-cli commands support `--output json` for structured, machine-readable output. Use this when you need to parse results programmatically:
+Most `zilliz-cli` resource commands support `--output json` for structured, machine-readable output (interactive/status helpers such as `zilliz auth status` output plain text). Use `--output json` when you need to parse results programmatically:
 
 ```bash
 zilliz cluster list --output json

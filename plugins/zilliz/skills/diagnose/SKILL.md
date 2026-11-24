@@ -124,7 +124,7 @@ Same three-section format as cluster diagnosis. When a collection finding's true
 - **Read-only.** Never run `delete`, `drop`, `release`, `resume`, `suspend`, `create`, `update`, index create/drop, or any mutating data-plane command as part of diagnosis. Present them as suggestions only.
 - **Cite evidence.** Every finding must reference the command that produced it and the observed value. No unsourced claims.
 - **Mark uncertainty.** Index parameter recommendations, replica counts, and CU sizing depend on workload specifics the CLI cannot observe. Phrase as "starting point, benchmark to confirm."
-- **Know the limits.** The CLI cannot see per-query plans, segment-level state, compaction backlog, GC, server-internal queues, or alert-rule state. If a question requires those, say so plainly rather than guessing.
+- **Know the limits.** The CLI cannot see per-query plans, segment-level state, compaction backlog, GC, server-internal queues, or live alert firing history (though configured project alert rules and their `enabled` flag can be inspected via `zilliz alert list`). If a question requires unexposed engine internals, say so plainly rather than guessing.
 - **Prefer parallel collection.** When multiple read-only commands are independent, run them in parallel to keep the diagnosis fast.
 - **JSON for parsing, charts for humans.** Use `-o json` (optionally with `--query`) when comparing values against thresholds; use the default chart output when surfacing trends back to the user.
 - **Honor context.** If the user has multiple clusters, confirm which one before collecting. If the collection is in a non-default database, thread `--database` through every data-plane command.

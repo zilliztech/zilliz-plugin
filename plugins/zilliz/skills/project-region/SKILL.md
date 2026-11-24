@@ -49,4 +49,4 @@ zilliz project add-regions --project-id <project-id> --region <region-ids-to-add
 ## Guidance
 
 - When the user wants to create a cluster, they need a project ID and region ID first. Guide them through `zilliz project list` and `zilliz cluster regions` (see cluster skill).
-- Project `upgrade` does not include `Free` as a valid target plan -- only Serverless, Standard, and Enterprise.
+- Project `upgrade` does not include `Free` or `Serverless` as a valid target plan -- valid plans are `Standard`, `Enterprise`, and `BusinessCritical`.
