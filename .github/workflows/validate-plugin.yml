@@ -1,0 +1,135 @@
+name: Validate Plugin
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Multi-Client Plugin Bundle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: pip install "pyyaml>=6.0"
+
+      - name: Validate manifests, skill limits, and security rules
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import pathlib
+          import re
+          import yaml
+
+          repo = pathlib.Path(".")
+          plugin_root = repo / "plugins" / "zilliz"
+
+          # 1. Validate JSON manifests and version sync
+          ag_path = plugin_root / ".antigravity-plugin" / "plugin.json"
+          claude_path = plugin_root / ".claude-plugin" / "plugin.json"
+          codex_path = plugin_root / ".codex-plugin" / "plugin.json"
+          claude_mkt_path = repo / ".claude-plugin" / "marketplace.json"
+          codex_mkt_path = repo / ".agents" / "plugins" / "marketplace.json"
+
+          ag = json.loads(ag_path.read_text(encoding="utf-8"))
+          claude = json.loads(claude_path.read_text(encoding="utf-8"))
+          codex = json.loads(codex_path.read_text(encoding="utf-8"))
+          claude_mkt = json.loads(claude_mkt_path.read_text(encoding="utf-8"))
+          codex_mkt = json.loads(codex_mkt_path.read_text(encoding="utf-8"))
+
+          versions = {
+              "antigravity": ag["version"],
+              "claude": claude["version"],
+              "codex": codex["version"],
+              "claude_marketplace": claude_mkt["plugins"][0]["version"],
+          }
+          assert len(set(versions.values())) == 1, f"Version mismatch across manifests: {versions}"
+
+          # 2. Validate Antigravity v1 schema keys and referenced assets
+          allowed_ag_keys = {
+              "$schema",
+              "name",
+              "displayName",
+              "display_name",
+              "description",
+              "version",
+              "disabled",
+              "logo",
+              "suggestedPrompts",
+              "suggested_prompts",
+              "skills",
+              "author",
+              "homepage",
+              "repository",
+              "license",
+              "keywords",
+              "extensions",
+          }
+          unknown = set(ag.keys()) - allowed_ag_keys
+          assert not unknown, f"Unsupported keys in .antigravity-plugin/plugin.json: {unknown}"
+          assert ag["name"] == "zilliz"
+          assert (plugin_root / ag["logo"]).is_file(), f"Missing logo file: {ag['logo']}"
+          assert (plugin_root / "README.md").is_file(), "Missing plugins/zilliz/README.md"
+          assert 1 <= len(ag.get("suggestedPrompts", [])) <= 3
+
+          # 3. Validate all skills: YAML frontmatter, <24,000-byte body, no Claude hardcoding
+          skills_dir = plugin_root / "skills"
+          skill_dirs = sorted(p for p in skills_dir.iterdir() if p.is_dir())
+          assert len(skill_dirs) >= 24, f"Expected at least 24 skills, found {len(skill_dirs)}"
+
+          remote_pipe_re = re.compile(
+              r"(\b(?:curl|wget)\b[^\n]*\|\s*(?:sudo\s+)?(?:ba|z|da|k)?sh\b|\b(?:irm|Invoke-WebRequest|iwr)\b[^\n]*\|\s*(?:iex|Invoke-Expression)\b)",
+              re.IGNORECASE,
+          )
+          insecure_http_re = re.compile(
+              r"http://(?!localhost\b|127\.0\.0\.1\b|0\.0\.0\.0\b|\[::1\])",
+              re.IGNORECASE,
+          )
+
+          for sdir in skill_dirs:
+              skill_md = sdir / "SKILL.md"
+              assert skill_md.is_file(), f"Missing {skill_md}"
+              raw = skill_md.read_text(encoding="utf-8")
+              assert raw.startswith("---\n"), f"{skill_md} missing YAML frontmatter"
+              rest = raw[4:]
+              end_idx = rest.find("\n---\n")
+              assert end_idx != -1, f"{skill_md} missing closing YAML frontmatter"
+              front = yaml.safe_load(rest[:end_idx])
+              body = rest[end_idx + 5 :]
+              assert front.get("name") == sdir.name, f"{skill_md} name mismatch: {front.get('name')}"
+              assert isinstance(front.get("description"), str) and front["description"].strip()
+              body_bytes = len(body.encode("utf-8"))
+              assert body_bytes < 24_000, f"{skill_md} body is {body_bytes} bytes (>= 24000 limit)"
+              assert "Claude Code" not in raw or sdir.name == "ask-zilliz", (
+                  f"{skill_md} hardcodes 'Claude Code' in shared skill"
+              )
+
+          # 4. Scan entire plugins/zilliz tree for remote pipe-to-shell or plaintext http://
+          for path in sorted(plugin_root.rglob("*")):
+              if not path.is_file():
+                  continue
+              text = path.read_text(encoding="utf-8")
+              m_pipe = remote_pipe_re.search(text)
+              assert not m_pipe, f"Disallowed remote pipe-to-shell in {path}: {m_pipe.group(0)}"
+              for line in text.splitlines():
+                  if 'xmlns="http://www.w3.org/2000/svg"' in line:
+                      continue
+                  assert not insecure_http_re.search(line), f"Insecure http:// URL in {path}: {line}"
+
+          install_sh = plugin_root / "skills" / "setup" / "scripts" / "install-cli.sh"
+          assert install_sh.is_file() and os.access(install_sh, os.X_OK), (
+              f"{install_sh} must exist and be executable"
+          )
+          print(f"Validated {len(skill_dirs)} skills and all multi-client manifests successfully.")
+          PY

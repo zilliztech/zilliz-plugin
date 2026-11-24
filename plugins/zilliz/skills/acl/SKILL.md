@@ -158,7 +158,7 @@ Level column before composing a statement.
 |---|---|---|---|
 | `org_member` | org | no | `view`, `create`, `modify`, `delete` |
 | `group` | org | no | `view`, `create`, `modify`, `delete` |
-| `api_key` | org | no | `view`, `create`, `modify`, `delete` |
+| `service_account` | org | no | `view`, `create`, `modify`, `delete` |
 | `org_role` | org | no | `view`, `grant` |
 | `project_role` | org | no | `view`, `create`, `modify`, `delete`, `grant` |
 | `project` | org | no | `view`, `create` |
@@ -166,6 +166,7 @@ Level column before composing a statement.
 | `authentication` | org | no | `view`, `manage` |
 | `org_control_ops` | org | no | `view`, `modify`, `delete` |
 | `recovery` | org | no | `view`, `manage` |
+| `service_account` | project | no | `view`, `create`, `modify`, `delete` |
 | `project_member` | project | no | `view`, `create`, `modify`, `delete` |
 | `project_role` | project | no | `view`, `create`, `modify`, `delete`, `grant` |
 | `project` | project | no | `view`, `modify`, `delete` |
