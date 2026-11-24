@@ -36,7 +36,13 @@ agy plugin install https://github.com/zilliztech/zilliz-plugin/tree/main/plugins
 
 ### From Claude Code Marketplace
 
-Search for **zilliz** in the plugin directory, or add the marketplace manually:
+Install directly in one command:
+
+```bash
+/plugin install zilliz --marketplace zilliztech/zilliz-plugin
+```
+
+Or add the marketplace first and install by name:
 
 ```text
 /plugin marketplace add zilliztech/zilliz-plugin
@@ -73,16 +79,7 @@ After installing the plugin:
 - **Claude Code:** run `/zilliz:quickstart`
 - **OpenAI Codex:** invoke the `quickstart` skill (e.g., `"set up the Zilliz CLI"`)
 
-This guides you through installing `zilliz-cli` (via the bundled SHA-256-verified installer script), authenticating in your terminal, and selecting an active cluster context.
-
-## Commands (Claude Code)
-
-| Command | Description |
-|---------|-------------|
-| `/zilliz:quickstart` | Install CLI, authenticate, and set up cluster context |
-| `/zilliz:status` | Show cluster status, collections, and statistics |
-
-Under Google Antigravity and OpenAI Codex these workflows are available directly as the `quickstart` and `status` skills below.
+This guides you through installing `zilliz-cli` (via the bundled SHA-256-verified installer script; Windows ARM64 runs via Windows x64 emulation), authenticating in your terminal, and selecting an active cluster context.
 
 ## Skills (24)
 

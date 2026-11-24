@@ -155,7 +155,7 @@ zilliz cluster list --output json
 zilliz collection describe --name <name> --output json
 ```
 
-Available formats: `json`, `table`, `text`. Default is `text`.
+Available formats: `json`, `table`, `text`, `yaml`, `csv`. Default is `table`.
 
 ## Cluster Type Differences
 

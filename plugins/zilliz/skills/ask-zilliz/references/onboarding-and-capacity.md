@@ -77,11 +77,11 @@ client.create_collection(
 
 | Language / Tool | Package / Repo | Docs |
 | --- | --- | --- |
-| Python | `pymilvus` | [Python SDK](https://docs.zilliz.com/reference/python/python/About) |
-| Java | `milvus-sdk-java` | [Java SDK](https://docs.zilliz.com/reference/java/java/v2-About) |
-| Go | `milvus/client/v2` | [Go SDK](https://docs.zilliz.com/reference/go/go/About) |
-| Node.js | `@zilliz/milvus2-sdk-node` | [Node.js SDK](https://docs.zilliz.com/reference/nodejs/nodejs/About) |
-| REST | cURL / any HTTP client | [RESTful API](https://docs.zilliz.com/reference/restful/About) |
+| Python | `pymilvus` | [Python SDK](https://docs.zilliz.com/reference/python) |
+| Java | `milvus-sdk-java` | [Java SDK](https://docs.zilliz.com/reference/java) |
+| Go | `milvus/client/v2` | [Go SDK](https://docs.zilliz.com/reference/go) |
+| Node.js | `@zilliz/milvus2-sdk-node` | [Node.js SDK](https://docs.zilliz.com/reference/nodejs) |
+| REST | cURL / any HTTP client | [RESTful API](https://docs.zilliz.com/reference/restful) |
 | CLI | `zilliz-cli` (`zilliz`) | [CLI Overview](https://docs.zilliz.com/reference/cli/overview) |
 | AI Coding Agents | `zilliztech/zilliz-plugin` | Google Antigravity, Claude Code, OpenAI Codex (`zilliz-cli` + Skills; replaces legacy unmaintained `zilliz-mcp-server`) |
 | Terraform | `zillizcloud` provider | [Terraform Provider](https://docs.zilliz.com/docs/terraform-provider) |

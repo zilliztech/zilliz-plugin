@@ -81,10 +81,10 @@ Render a single report with three sections, in this order:
 zilliz collection describe --name <coll> -o json
 zilliz collection get-stats --name <coll> -o json
 zilliz collection get-load-state --name <coll> -o json
-zilliz index list --collection-name <coll> -o json
-# For each vector index reported above:
-zilliz index describe --collection-name <coll> --field-name <field> -o json
-zilliz partition list --collection-name <coll> -o json
+zilliz index list --collection <coll> -o json
+# For each index name reported above:
+zilliz index describe --collection <coll> --index-name <index-name> -o json
+zilliz partition list --collection <coll> -o json
 ```
 
 Pull per-collection metrics for the last hour and 24h:
@@ -98,7 +98,7 @@ zilliz collection metrics -c <coll> \
   --period 1h
 ```
 
-If the cluster context is wrong or the collection lives in a non-default database, pass `--database <db>` on every command.
+If the collection lives in a non-default database, pass `--database <db>` on the data-plane `collection`, `index`, and `partition` commands above (`zilliz collection metrics` is a control-plane command and uses `--cluster-id` rather than `--database`).
 
 ### 2. Analyze
 
@@ -127,4 +127,4 @@ Same three-section format as cluster diagnosis. When a collection finding's true
 - **Know the limits.** The CLI cannot see per-query plans, segment-level state, compaction backlog, GC, server-internal queues, or alert-rule state. If a question requires those, say so plainly rather than guessing.
 - **Prefer parallel collection.** When multiple read-only commands are independent, run them in parallel to keep the diagnosis fast.
 - **JSON for parsing, charts for humans.** Use `-o json` (optionally with `--query`) when comparing values against thresholds; use the default chart output when surfacing trends back to the user.
-- **Honor context.** If the user has multiple clusters, confirm which one before collecting. If the collection is in a non-default database, thread `--database` through every command.
+- **Honor context.** If the user has multiple clusters, confirm which one before collecting. If the collection is in a non-default database, thread `--database` through every data-plane command.

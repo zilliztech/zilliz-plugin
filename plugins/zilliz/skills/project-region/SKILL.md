@@ -13,7 +13,7 @@ description: Use when the user wants to create, list, describe, delete, or upgra
 
 ```bash
 zilliz project create --name <project-name> --plan <Standard|Enterprise|BusinessCritical>
-# Optional: --region '[...]'
+# Optional: --region <region-ids-to-bind>
 ```
 
 ### List Projects
@@ -43,7 +43,7 @@ zilliz project upgrade --project-id <project-id> --plan <Standard|Enterprise|Bus
 ### Bind additional regions to an existing project
 
 ```bash
-zilliz project add-regions --project-id <project-id> --region '[...]'
+zilliz project add-regions --project-id <project-id> --region <region-ids-to-add>
 ```
 
 ## Guidance
