@@ -109,42 +109,42 @@ zilliz role drop --role <role-name-to-drop>
 ```bash
 zilliz role grant-privilege \
   --role <role-name> \
-  --object-type <Global|Collection|Database> \
-  --object-name <object-name> \
-  --privilege <privilege-name>
+  --privilege <privilege> \
+  --collection <collection-name>
 # Optional: --database <database-name>
 ```
 
-*Grant a privilege to a role.*
+*Grant a privilege or privilege group to a role.*
 
 #### Revoke a Privilege
 
 ```bash
 zilliz role revoke-privilege \
   --role <role-name> \
-  --object-type <Global|Collection|Database> \
-  --object-name <object-name> \
-  --privilege <privilege-name>
+  --privilege <privilege> \
+  --collection <collection-name>
 # Optional: --database <database-name>
 ```
 
-*Revoke a privilege from a role.*
+*Revoke a privilege or privilege group from a role.*
 
-## Common Privileges
+## Common Privileges and Privilege Groups
 
-Common privileges by object type:
+`zilliz role grant-privilege` and `zilliz role revoke-privilege` use the Milvus RBAC v2 endpoints (`grant_privilege_v2` / `revoke_privilege_v2`):
 
-- **Collection**: `Search`, `Query`, `Insert`, `Delete`, `CreateIndex`, `DropCollection`
-- **Global**: `CreateCollection`, `All`
-- **Database**: `ListCollections`
+- **Built-in Privilege Groups (recommended on Zilliz Cloud)**:
+  - Collection scope: `CollectionReadOnly`, `CollectionReadWrite`, `CollectionAdmin`
+  - Database scope (pass `--collection '*'`): `DatabaseReadOnly`, `DatabaseReadWrite`, `DatabaseAdmin`
+  - Cluster scope (pass `--collection '*'` and `--database '*'`): `ClusterReadOnly`, `ClusterReadWrite`, `ClusterAdmin`
+- **Individual Privileges**: `Search`, `Query`, `Insert`, `Upsert`, `Delete`, `Flush`, `GetLoadState`, `GetLoadingProgress`, `HasPartition`
 
 ## Guidance
 
 - User and role management is only available on **Dedicated** clusters.
-- Built-in roles: `admin` (full access), `public` (no privileges by default -- must be granted explicitly).
-- When setting up RBAC, suggest a workflow: create role, grant privileges, create user, assign role.
+- Zilliz Cloud Dedicated built-in roles: `db_admin` (full database access), `db_rw` (read-write access), `db_ro` (read-only access). Self-managed Milvus also defines `admin` and `public`.
+- When setting up RBAC, suggest a workflow: create role, grant privilege groups or privileges, create user, assign role.
 - Before dropping a user or role, confirm with the user.
-- Use `*` as object-name to grant privilege on all objects of that type.
+- Pass `--collection '*'` to apply a privilege across all collections in the target database (and `--database '*'` for all databases).
 - These commands are **Milvus database RBAC**, scoped to one cluster. They do
   not control who can create, modify, or delete cloud resources -- that is
   cloud-level RBAC over organizations and projects, managed with `zilliz acl`

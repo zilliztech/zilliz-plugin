@@ -107,11 +107,11 @@ Start time: `HH:MM` or `HH:MM-HH:MM` (time window), e.g. `02:00` or `03:00-05:00
 
 ## Guidance
 
-- The backup type is automatically derived: if `--collection` is provided, it's a COLLECTION backup; otherwise it's a CLUSTER backup.
+- The backup type is automatically derived: if `--collection` is provided, it's a COLLECTION backup; otherwise it's a CLUSTER backup. Whole-cluster (`CLUSTER`) backups require a **Dedicated** cluster; Serverless clusters reject `--type CLUSTER` (`96022`).
 - Backup creation, export, and restore operations are **asynchronous**. After starting, use `backup describe` to check progress.
 - The `--integration-id` for export refers to a cloud storage integration configured in the Zilliz Cloud console (see import skill for setup guidance).
 - Before deleting a backup, confirm with the user -- this is irreversible.
 - When restoring, explain the difference between cluster restore (new cluster) and collection restore (into existing cluster).
-- To restore a cluster backup onto a specific Milvus version, first run `zilliz cluster versions --backup-id <backup-id>` and pass the chosen option's `milvusVersion` as `--version` and its `channel` as `--channel` to `backup restore-cluster`. `ORIGIN` restores the exact version recorded in the backup. Do not combine `--version`/`--channel` with `--restore-version-policy`. An empty list means this backup does not support explicit version selection; restore without these flags to keep the default behavior.
+- To restore a cluster backup onto a specific Milvus version, first run `zilliz cluster versions --backup-id <backup-id>` and pass the chosen option's `milvusVersion` as `--version` and its `channel` as `--channel` to `backup restore-cluster`. `ORIGIN` restores the exact version recorded in the backup. Do not combine `--version`/`--channel` with `--restore-version-policy`. An empty list (or error `96018` when explicit version listing is not yet enabled on the endpoint) means explicit version selection is unavailable; restore without these flags to keep the default behavior.
 - In an interactive terminal, `backup restore-cluster` without `--version`, `--channel` or `--restore-version-policy` prompts the user to pick a version. Agent runs are non-interactive and get no prompt, so the default restore behavior applies; if the user wants a specific version, list the options with `zilliz cluster versions --backup-id <backup-id>` and pass the choice explicitly.
 - Suggest setting up a backup policy for production clusters.

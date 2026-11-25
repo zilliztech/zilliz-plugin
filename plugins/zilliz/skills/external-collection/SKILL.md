@@ -9,10 +9,12 @@ description: Use when the user wants to trigger, describe, or list refresh jobs 
 2. The target collection must already exist as an **external collection**
    (created with an `externalSource` / `externalSpec` schema in the
    collection skill). Plain in-place collections do not have refresh jobs.
-3. The cluster must be running a `kite-coordinator` build that exposes
-   `/v2/vectordb/jobs/external_collection/*` (PR #5735 or later). On older
-   data planes the API returns 404 -- in that case ask the user to upgrade
-   the cluster.
+3. The cluster must expose `/v2/vectordb/jobs/external_collection/*` (for
+   example, Serverless / Vector Lake gateways or Dedicated clusters on Milvus
+   2.6+ with external collection support enabled). Standard Dedicated clusters
+   without external collection routing return HTTP 404 -- in that case explain
+   that the target cluster does not support external collections or needs an
+   upgrade.
 
 ## Commands Reference
 
