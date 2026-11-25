@@ -132,17 +132,18 @@ zilliz role revoke-privilege \
 
 `zilliz role grant-privilege` and `zilliz role revoke-privilege` use the Milvus RBAC v2 endpoints (`grant_privilege_v2` / `revoke_privilege_v2`):
 
-- **Built-in Privilege Groups (recommended on Zilliz Cloud)**:
+- **Built-in Privilege Groups (required on Zilliz Cloud Dedicated)**:
   - Collection scope: `CollectionReadOnly`, `CollectionReadWrite`, `CollectionAdmin`
   - Database scope (pass `--collection '*'`): `DatabaseReadOnly`, `DatabaseReadWrite`, `DatabaseAdmin`
   - Cluster scope (pass `--collection '*'` and `--database '*'`): `ClusterReadOnly`, `ClusterReadWrite`, `ClusterAdmin`
-- **Individual Privileges**: `Search`, `Query`, `Insert`, `Upsert`, `Delete`, `Flush`, `GetLoadState`, `GetLoadingProgress`, `HasPartition`
+- **Individual Privileges (self-managed Milvus only)**: `Search`, `Query`, `Insert`, `Upsert`, `Delete`, `Flush`, `GetLoadState`, `GetLoadingProgress`, `HasPartition`
 
 ## Guidance
 
 - User and role management is only available on **Dedicated** clusters.
 - Zilliz Cloud Dedicated built-in roles: `db_admin` (full database access), `db_rw` (read-write access), `db_ro` (read-only access). Self-managed Milvus also defines `admin` and `public`.
 - When setting up RBAC, suggest a workflow: create role, grant privilege groups or privileges, create user, assign role.
+- In `zilliz role describe` output on Zilliz Cloud, v2 privilege-group grants report `"objectType": "Global"` while `"objectName"` and `"dbName"` indicate the actual collection (or `"*"`) and database scope.
 - Before dropping a user or role, confirm with the user.
 - Pass `--collection '*'` to apply a privilege across all collections in the target database (and `--database '*'` for all databases).
 - These commands are **Milvus database RBAC**, scoped to one cluster. They do
