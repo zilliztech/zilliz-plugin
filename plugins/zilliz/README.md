@@ -13,7 +13,7 @@ Manage [Zilliz Cloud](https://zilliz.com/) clusters, Milvus vector collections, 
 ## Prerequisites
 
 1. **Zilliz Cloud account**: Sign up for free at [cloud.zilliz.com](https://cloud.zilliz.com) (no credit card required for a Free cluster).
-2. **`zilliz-cli` (`zilliz` >= 2.0.3)**:
+2. **`zilliz-cli` (`zilliz` >= 2.0.4)**:
    - Ask your agent to run the **`quickstart`** or **`setup`** skill (which uses the audited local installer bundled with this plugin and verifies SHA-256 checksums against `sha256sums.txt`; Windows ARM64 runs via x64 emulation), or install manually via `uv tool install zilliz-cli` or [Zilliz CLI Releases](https://github.com/zilliztech/zilliz-cli/releases).
 3. **Interactive authentication**:
    - In your own terminal, run `zilliz login` (browser OAuth, recommended) or `zilliz login --api-key` (or set `ZILLIZ_API_KEY`).
