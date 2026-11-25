@@ -9,7 +9,7 @@
     {
       "name": "zilliz",
       "description": "Manage Zilliz Cloud clusters and Milvus vector databases from Claude Code",
-      "version": "2.0.1",
+      "version": "2.0.2",
       "source": "./plugins/zilliz"
     }
   ]
