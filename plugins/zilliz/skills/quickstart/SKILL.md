@@ -48,6 +48,10 @@ If not logged in, instruct the user to open their own terminal and run one of:
 
 **IMPORTANT:** These commands require interactive input and cannot run inside a non-interactive AI coding agent session. Do NOT ask the user to paste API keys into the chat.
 
+**First-time account initialization & `400` / `20014` login troubleshooting:**
+- Before `zilliz login` can exchange an Auth0 token for credentials, the user's email must have signed in at least once at [https://cloud.zilliz.com](https://cloud.zilliz.com) so their Zilliz Cloud account and default organization exist.
+- If the user reports that browser verification succeeded but `Exchanging token for credentials...` failed with `API Error (400)`, `Code 20014` (`The account does not exist`), or `Login failed: Unknown error`, explain the root cause clearly: Auth0 verified their identity, but their Zilliz Cloud console account has not been initialized yet. Advise them to open [https://cloud.zilliz.com](https://cloud.zilliz.com), sign in once with the **exact same email / Google / GitHub account** (free, no credit card needed) to initialize their organization, and then re-run `zilliz login`.
+
 Wait for the user to confirm login is complete, then verify:
 
 ```bash
