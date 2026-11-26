@@ -61,8 +61,9 @@ If not logged in, tell the user to open their own terminal and run one of the fo
 zilliz login
 ```
 
-- Opens a browser for authentication
+- Opens a browser for Auth0 Device Code authentication
 - Retrieves user info, organization data, and API keys
+- **First-time Zilliz Cloud users:** Make sure the user has signed in at least once at [https://cloud.zilliz.com](https://cloud.zilliz.com) so their Zilliz Cloud account and default organization are initialized. Completing the Auth0 browser check alone without prior console sign-up will fail during token exchange (`HTTP 400` / `Code 20014`).
 - Use `--no-browser` in headless environments (displays a URL to visit manually)
 
 **Option 2a: API Key via login command**
@@ -174,6 +175,9 @@ When a command fails with a permissions error, check the cluster type first -- t
 
 ## Troubleshooting
 
+- **"Exchanging token for credentials..." fails with `API Error (400)` / `Code 20014` (`"The account does not exist"`, or `"Login failed: Unknown error"` on CLI <= 2.0.4):**
+  - **Root cause:** Auth0 browser SSO succeeded, so the user saw "Device Activated" in the browser, but `POST https://cloud-service.cloud.zilliz.com/account/v1/cli/login` returned `HTTP 400 (Code 20014)` because that email has never logged into the Zilliz Cloud web console to initialize a Zilliz Cloud account and default organization.
+  - **How to advise the user:** Explain clearly that their browser identity verification succeeded, and they only need to complete one-time console initialization: open [https://cloud.zilliz.com](https://cloud.zilliz.com) in their browser, sign in once with the **exact same email / Google / GitHub account** used during `zilliz login` (free, no credit card required) until the Zilliz Cloud console dashboard loads, and then re-run `zilliz login` in their terminal.
 - **"command not found" after install:** Ensure `~/.local/bin` (macOS/Linux) or `%LOCALAPPDATA%\Programs\Zilliz` (Windows) is in `PATH`, or re-run `bash "<setup-skill-dir>/scripts/install-cli.sh"` (`install-cli.ps1` on Windows).
 - **"not authenticated" errors:** Run `zilliz auth status` to check login state. Tokens may have expired -- instruct the user to re-run `zilliz login` in their own terminal.
 - **Context errors (no cluster set):** Run `zilliz context current` to verify. If the cluster was deleted or suspended, set a new context with `zilliz context set --cluster-id <id>`.
