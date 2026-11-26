@@ -19,12 +19,6 @@ Manage [Zilliz Cloud](https://zilliz.com/) clusters, Milvus vector collections, 
    - In your own terminal, run `zilliz login` (browser OAuth, recommended) or `zilliz login --api-key` (or set `ZILLIZ_API_KEY`).
    - For security, interactive login commands run in your terminal -- never paste API keys directly into chat.
 
-### Installing in Claude Code
-
-```bash
-/plugin install zilliz --marketplace zilliztech/zilliz-plugin
-```
-
 ## Getting Started
 
 Try one of these prompts right after enabling the plugin:
@@ -48,6 +42,7 @@ Try one of these prompts right after enabling the plugin:
 
 - **Documentation**: [docs.zilliz.com](https://docs.zilliz.com)
 - **CLI Reference**: [docs.zilliz.com/reference/cli/overview](https://docs.zilliz.com/reference/cli/overview)
+- **Installation Guide**: [github.com/zilliztech/zilliz-plugin#installation](https://github.com/zilliztech/zilliz-plugin#installation)
 - **Source Repository**: [github.com/zilliztech/zilliz-plugin](https://github.com/zilliztech/zilliz-plugin)
 - **Support**: [support.zilliz.com](https://support.zilliz.com) | [support@zilliz.com](mailto:support@zilliz.com)
 - **License**: Apache-2.0
