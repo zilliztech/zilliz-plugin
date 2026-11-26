@@ -2,7 +2,7 @@
   "$schema": "https://antigravity.google/schemas/v1/plugin.json",
   "name": "zilliz",
   "displayName": "Zilliz Cloud",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Manage Zilliz Cloud clusters, Milvus collections, vector search, RBAC, backups, volumes, and imports through natural language using zilliz-cli.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
