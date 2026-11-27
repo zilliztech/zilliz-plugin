@@ -1,9 +1,7 @@
 ---
 name: ask-zilliz
-description: |
-  Zilliz Cloud onboarding, architecture, pricing, and developer assistant. Helps users understand Zilliz Cloud, choose the right plan, estimate CU/vCU costs, design schemas, write SDK code, debug issues, and adopt features like Volumes, Functions, Auto-Scaling, Milvus 2.6, and Global Clusters.
-
-  Use this skill whenever the user asks about Zilliz Cloud -- including plan selection, pricing, cost estimation, capacity planning, cluster configuration, SDK usage, schema design, hybrid search, migration, troubleshooting, AI agent / CLI / Terraform integration, auto-scaling, metrics/alerts, backup/restore, or any "how do I do X with Zilliz Cloud" question. Also trigger on keywords like "Zilliz", "zilliz cloud", "vector database", "which plan", "serverless vs dedicated", "CU", "vCU", "Milvus cloud", "pymilvus", "embedding function", "hybrid search", "rerank", "BM25", "global cluster", "BYOC", "tiered storage", "volume", "partition key", or Zilliz Cloud error messages.
+description: >-
+  Use when the user asks Zilliz Cloud or Milvus architecture, onboarding, plan selection, CU/vCU pricing and sizing, schema or hybrid-search design, pymilvus SDK code, migration, Global Cluster, BYOC, or best-practice questions.
 ---
 
 # Ask Zilliz -- Zilliz Cloud Assistant
