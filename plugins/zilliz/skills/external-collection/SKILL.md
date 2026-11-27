@@ -1,6 +1,6 @@
 ---
 name: external-collection
-description: Use when the user wants to trigger, describe, or list refresh jobs for an external collection (a collection backed by an external data source such as Vector Lake). Note this is the data-plane refresh workflow, not collection CRUD -- for create/drop/load see the collection skill.
+description: Use when the user wants to trigger, describe, or list refresh jobs for an external collection (backed by an external source like Vector Lake). For collection create/drop/load see the collection skill.
 ---
 
 ## Prerequisites

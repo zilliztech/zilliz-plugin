@@ -109,6 +109,9 @@ jobs:
               body = rest[end_idx + 5 :]
               assert front.get("name") == sdir.name, f"{skill_md} name mismatch: {front.get('name')}"
               assert isinstance(front.get("description"), str) and front["description"].strip()
+              assert len(front["description"]) <= 240, (
+                  f"{skill_md} description is {len(front['description'])} chars (> 240 limit)"
+              )
               body_bytes = len(body.encode("utf-8"))
               assert body_bytes < 24_000, f"{skill_md} body is {body_bytes} bytes (>= 24000 limit)"
               assert "Claude Code" not in raw or sdir.name == "ask-zilliz", (

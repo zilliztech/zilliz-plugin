@@ -108,7 +108,7 @@ Start time: `HH:MM` or `HH:MM-HH:MM` (time window), e.g. `02:00` or `03:00-05:00
 ## Guidance
 
 - The backup type is automatically derived: if `--collection` is provided, it's a COLLECTION backup; otherwise it's a CLUSTER backup. Whole-cluster (`CLUSTER`) backups require a **Dedicated** cluster; Serverless clusters reject `--type CLUSTER` (`96022`).
-- Backup creation, export, and restore operations are **asynchronous**. After starting, use `backup describe` to check progress.
+- Backup creation, export, and restore operations are **asynchronous**. Pass `--wait` to `zilliz backup create` to wait for completion, or use `zilliz backup describe` to check progress.
 - The `--integration-id` for export refers to a cloud storage integration configured in the Zilliz Cloud console (see import skill for setup guidance).
 - Before deleting a backup, confirm with the user -- this is irreversible.
 - When restoring, explain the difference between cluster restore (new cluster) and collection restore (into existing cluster).

@@ -1,6 +1,6 @@
 ---
 name: acl
-description: Use when the user wants to manage Zilliz Cloud access control -- custom org or project roles and their policies, granting or revoking a role for an organization member, or binding roles to a SCIM user group. This is cloud-level RBAC over organizations, projects, and clusters -- for database users and privileges inside Milvus see the user-role skill.
+description: Use when the user wants to manage Zilliz Cloud access control (cloud-level RBAC) -- custom project or org roles, policies, member grants, or SCIM group bindings. For Milvus database users and privileges see user-role.
 ---
 
 ## Prerequisites
